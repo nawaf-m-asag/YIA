@@ -1,0 +1,48 @@
+[15-Dec-2021 15:24:04 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[28000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=loca...', 'forge', '', Array)
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=loca...', 'forge', '', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=loca...', Array, Array)
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connectio in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
+[15-Dec-2021 15:29:21 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiarchitects_db2.languages' doesn't exist in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php:331
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(331): PDO->prepare('select * from `...')
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(664): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(631): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(339): Illuminate\Database\Connection->run('select * from `...', Array in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
+[15-Dec-2021 15:29:22 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiarchitects_db2.languages' doesn't exist in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php:331
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(331): PDO->prepare('select * from `...')
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(664): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(631): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(339): Illuminate\Database\Connection->run('select * from `...', Array in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
+[15-Dec-2021 15:29:27 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiarchitects_db2.languages' doesn't exist in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php:331
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(331): PDO->prepare('select * from `...')
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(664): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(631): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(339): Illuminate\Database\Connection->run('select * from `...', Array in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
+[15-Dec-2021 15:29:44 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiarchitects_db2.static_options' doesn't exist in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php:331
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(331): PDO->prepare('select * from `...')
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(664): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(631): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(339): Illuminate\Database\Connection->run('select * from `...',  in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
+[15-Dec-2021 15:29:47 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiarchitects_db2.static_options' doesn't exist in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php:331
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(331): PDO->prepare('select * from `...')
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(664): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(631): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(339): Illuminate\Database\Connection->run('select * from `...',  in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
+[15-Dec-2021 15:29:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiarchitects_db2.static_options' doesn't exist in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php:331
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(331): PDO->prepare('select * from `...')
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(664): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(631): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(339): Illuminate\Database\Connection->run('select * from `...',  in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
+[15-Dec-2021 15:30:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'yiarchitects_db2.static_options' doesn't exist in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php:331
+Stack trace:
+#0 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(331): PDO->prepare('select * from `...')
+#1 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(664): Illuminate\Database\Connection->Illuminate\Database\{closure}('select * from `...', Array)
+#2 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(631): Illuminate\Database\Connection->runQueryCallback('select * from `...', Array, Object(Closure))
+#3 /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php(339): Illuminate\Database\Connection->run('select * from `...',  in /home/yiarchitects/site2.yiarchitects.org/@core/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 671
