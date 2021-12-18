@@ -7,10 +7,7 @@
         "laravel"
     ],
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://sharifur-robin@bitbucket.org/ir-tech-wp/license-api.git"
-        }
+
     ],
     "license": "MIT",
     "require": {
