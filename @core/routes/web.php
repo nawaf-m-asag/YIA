@@ -414,6 +414,7 @@ Route::prefix('user-home')->middleware(['userEmailVerify', 'setlang:frontend', '
     Route::post('/event-user/generate-ticket', 'UserDashboardController@generate_event_ticket')->name('user.dashboard.event.ticket.generate');
 });
 
+Route::post('/profile-update/image', 'UserDashboardController@image_profile_update')->name('image.profile.update');
 
 
 /*------------------------------------

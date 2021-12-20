@@ -30,6 +30,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use App\MediaUpload;
+use Intervention\Image\Facades\Image;
+
 
 class UserDashboardController extends Controller
 {
@@ -58,6 +61,7 @@ class UserDashboardController extends Controller
                 'appointments' => $appointments,
                 'courses' => $courses,
                 'support_tickets' => $support_tickets,
+                'user_details' => $this->logged_user_details()
             ]);
     }
 
@@ -655,4 +659,62 @@ class UserDashboardController extends Controller
         $pdf = PDF::loadView('certificate.course', ['course_certificate' => $course_certificate])->setPaper('a4', 'landscape');
         return $pdf->download('certificate'.Str::random(10).'.pdf');
     }
+
+    public function image_profile_update(Request $request)
+    {
+      
+        if ($request->hasFile('profile_pic')) {
+       
+            $image = $request->profile_pic;
+            $image_dimension = getimagesize($image);;
+            $image_width = $image_dimension[0];
+            $image_height = $image_dimension[1];
+            $image_dimension_for_db = $image_width . ' x ' . $image_height . ' pixels';
+            $image_size_for_db = $image->getSize();
+
+            $image_extenstion = $image->getClientOriginalExtension();
+            $image_name_with_ext = $image->getClientOriginalName();
+
+            $image_name = pathinfo($image_name_with_ext, PATHINFO_FILENAME);
+            $image_name = strtolower(Str::slug($image_name));
+
+            $image_db = $image_name . time() . '.' . $image_extenstion;
+            $image_grid = 'grid-'.$image_db ;
+            $image_large = 'large-'. $image_db;
+            $image_thumb = 'thumb-'. $image_db;
+
+            $folder_path = 'assets/uploads/media-uploader/';
+            $resize_grid_image = Image::make($image)->resize(350, null,function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $resize_large_image = Image::make($image)->resize(740, null,function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $resize_thumb_image = Image::make($image)->resize(150, 150);
+
+            $request->profile_pic->move($folder_path, $image_db);
+
+           $MediaUpload=MediaUpload::create([
+                'title' => $image_name_with_ext,
+                'size' => formatBytes($image_size_for_db),
+                'path' => $image_db,
+                'dimensions' => $image_dimension_for_db
+            ]);
+
+            if ($image_width > 150){
+                $resize_thumb_image->save($folder_path . $image_thumb);
+                $resize_grid_image->save($folder_path . $image_grid);
+                $resize_large_image->save($folder_path . $image_large);
+            }
+            User::find(Auth::guard()->user()->id)->update([
+                'image' => isset($MediaUpload->id)?$MediaUpload->id:null,
+                ]
+            );
+        } else
+            {
+                return "no file";
+            }
+            return back()->with(['msg' => __('Image Upload '),'type' => 'success']);
+    }
+   
 }
