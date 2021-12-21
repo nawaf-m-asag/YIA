@@ -33,9 +33,40 @@
         </div>
     </div>
     <div class="row m-1">
-        <div class="col-4 card"> ufduf</div>
-        <div class="col-4 card"> ufduf</div>
-        <div class="col-4 card"> ufduf</div>
+        <div class="col-4">
+          <div class="card">
+            <div class="card-header">
+              المعلومات الشخصية
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{$user_details->address}}</li>
+              <li class="list-group-item">{{$user_details->phone}}</li>
+              <li class="list-group-item">{{$user_details->email}}</li>
+              <li class="list-group-item">{{$user_details->country}}</li>
+              <li class="list-group-item">{{$user_details->city}}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="card-header">
+            التعليم
+            </div>
+            <ul class="list-group list-group-flush">
+           
+            </ul>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <div class="card-header">
+             معلومات العضوية
+            </div>
+            <ul class="list-group list-group-flush">
+      
+            </ul>
+          </div>
+        </div>
     </div>    
 @endsection
 @section('scripts')

@@ -39,6 +39,10 @@
                                 <input type="text" class="form-control"  id="price"  name="price" placeholder="{{__('Price')}}">
                             </div>
                             <div class="form-group">
+                                <label for="price">{{__('Points')}}</label>
+                                <input type="text" class="form-control"  id="Points"  name="points" placeholder="{{__('Points')}}">
+                            </div>
+                            <div class="form-group">
                                 <label for="type">{{__('Type')}}</label>
                                 <input type="text" class="form-control"  id="type"  name="type" placeholder="{{__('Type')}}">
                             </div>
@@ -68,14 +72,6 @@
                             <div class="form-group">
                                 <label for="btn_url">{{__('Button URL')}}</label>
                                 <input type="text" class="form-control"  id="btn_url"  name="btn_url" placeholder="{{__('Button URL')}}">
-                            </div>
-                            <div class="form-group">
-                                <label for="categories_id">{{__('Category')}}</label>
-                                <select name="categories_id" class="form-control" id="category">
-                                    @foreach($all_category as $cat)
-                                    <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                    @endforeach
-                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="status">{{__('Status')}}</label>

@@ -63,7 +63,7 @@
                                         <th>{{__('ID')}}</th>
                                         <th>{{__('Title')}}</th>
                                         <th>{{__('Price')}}</th>
-                                        <th>{{__('Category')}}</th>
+                                        <th>{{__('Points')}}</th>
                                         <th>{{__('Status')}}</th>
                                         <th>{{__('Type')}}</th>
                                         <th>{{__('Action')}}</th>
@@ -82,9 +82,7 @@
                                                     {{$data->title}}
                                                 </td>
                                                 <td>{{amount_with_currency_symbol($data->price)}}</td>
-                                                <td>
-                                                   {{get_price_plan_category_by_id($data->categories_id)}}
-                                                </td>
+                                                <td>{{$data->points}}</td>
                                                 <td>
                                                     @if($data->status == 'draft')
                                                         <span class="alert alert-warning" style="margin-top: 20px;display: inline-block;">{{__('Draft')}}</span>
@@ -106,6 +104,7 @@
                                                        data-icon="{{$data->icon}}"
                                                        data-type="{{$data->type}}"
                                                        data-price="{{$data->price}}"
+                                                       data-points="{{$data->points}}"
                                                        data-lang="{{$data->lang}}"
                                                        data-features="{{$data->features}}"
                                                        data-btnText="{{$data->btn_text}}"
@@ -165,6 +164,10 @@
                         <div class="form-group">
                             <label for="edit_price">{{__('Price')}}</label>
                             <input type="text" class="form-control"  id="edit_price"  name="price" placeholder="{{__('Price')}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_price">{{__('points')}}</label>
+                            <input type="text" class="form-control"  id="edit_points"  name="points" placeholder="{{__('Points')}}">
                         </div>
                         <div class="form-group">
                             <label for="edit_type">{{__('Type')}}</label>
@@ -275,6 +278,7 @@
                 form.find('#price_plan_id').val(id);
                 form.find('#edit_title').val(title);
                 form.find('#edit_price').val(el.data('price'));
+                form.find('#edit_points').val(el.data('points'));
                 form.find('#edit_icon').val(el.data('icon'));
                 form.find('#edit_type').val(el.data('type'));
                 form.find('#edit_btn_text').val(el.data('btntext'));

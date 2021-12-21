@@ -1,15 +1,14 @@
-@extends('frontend.frontend-page-master')
+@extends('frontend.frontend-user-master')
 @section('page-title')
     {{__('User Dashboard')}}
 @endsection
 @section('content')
     <section class="login-page-wrapper">
-        <div class="container">
+        <div class="full-container">
             <div class="row">
-                <div class="col-lg-12">
-
+                <div class="col-3">
                     <div class="user-dashboard-wrapper">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
                             <li class="mobile_nav">
                                 <i class="fas fa-cogs"></i>
                             </li>
@@ -69,14 +68,17 @@
                                 </form>
                             </li>
                         </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" role="tabpanel">
-                                <div class="message-show margin-top-10">
-                                    <x-flash-msg/>
-                                    <x-error-msg/>
-                                </div>
-                                @yield('section')
+                      
+                    </div>
+                </div>
+                <div class="col-9">
+                    <div class="container tab-content mt-5">
+                        <div class="tab-pane active" role="tabpanel">
+                            <div class="message-show margin-top-10">
+                                <x-flash-msg/>
+                                <x-error-msg/>
                             </div>
+                            @yield('section')
                         </div>
                     </div>
                 </div>

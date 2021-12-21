@@ -30,6 +30,7 @@ class PricePlanController extends Controller
         $this->validate($request,[
             'title' => 'required|string|max:191',
             'price' => 'required|string|max:191',
+            'points' => 'required|string|max:191',
             'lang' => 'required|string|max:191',
             'type' => 'nullable|string|max:191',
             'highlight' => 'nullable|string|max:191',
@@ -37,7 +38,6 @@ class PricePlanController extends Controller
             'btn_text' => 'required|string|max:191',
             'btn_url' => 'nullable|string|max:191',
             'features' => 'required|string',
-            'categories_id' => 'required|string',
         ]);
         PricePlan::create($request->all());
         return redirect()->back()->with(['msg' => __('New Price Plan Added...'),'type' => 'success']);
@@ -48,13 +48,13 @@ class PricePlanController extends Controller
         $this->validate($request,[
             'title' => 'required|string|max:191',
             'price' => 'required|string|max:191',
+            'points' => 'required|string|max:191',
             'lang' => 'required|string|max:191',
             'type' => 'nullable|string|max:191',
             'highlight' => 'nullable|string|max:191',
             'status' => 'nullable|string|max:191',
             'btn_text' => 'required|string|max:191',
             'btn_url' => 'nullable|string|max:191',
-            'categories_id' => 'required|string',
             'features' => 'required|string',
         ]);
 
@@ -62,9 +62,9 @@ class PricePlanController extends Controller
             [
                 'title' => $request->title,
                 'price' => $request->price,
+                'points' => $request->points,
                 'lang' => $request->lang,
                 'type' => $request->type,
-                'categories_id' => $request->categories_id,
                 'highlight' => $request->highlight,
                 'status' => $request->status,
                 'btn_text' => $request->btn_text,

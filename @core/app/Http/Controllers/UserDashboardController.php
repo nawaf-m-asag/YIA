@@ -124,6 +124,8 @@ class UserDashboardController extends Controller
             'zipcode' => 'nullable|string|max:191',
             'country' => 'nullable|string|max:191',
             'address' => 'nullable|string',
+            'dob' => 'nullable',
+            'gender'=>'nullable'
         ],[
             'name.' => __('name is required'),
             'email.required' => __('email is required'),
@@ -139,6 +141,8 @@ class UserDashboardController extends Controller
             'zipcode' => $request->zipcode,
             'country' => $request->country,
             'address' => $request->address,
+            'gender'=> $request->gender,
+            'dob'=>$request->dob,
             ]
         );
 

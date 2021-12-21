@@ -1,6 +1,6 @@
 @extends('frontend.user.dashboard.user-master')
 @section('section')
-    <div class="dashboard-form-wrapper">
+    <div class="dashboard-form-wrapper m-5">
         <h2 class="title">{{__('Edit Profile')}}</h2>
         <form action="{{route('user.profile.update')}}" method="post" enctype="multipart/form-data">
             @csrf
@@ -15,6 +15,17 @@
             <div class="form-group">
                 <label for="phone">{{__('Phone')}}</label>
                 <input type="tel" class="form-control" id="phone" name="phone" value="{{$user_details->phone}}">
+            </div>
+            <div class="form-group">
+                <label for="gender">{{__('Gender')}}</label>
+              <select for="gender" name="gender" class="form-control" id="gender">
+                  <option value="0" @if ($user_details->gender==0) selected @endif >{{__('Male')}}</option>
+                  <option value="1" @if ($user_details->gender==1) selected @endif>{{__('Female')}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label for="dob">{{__('Dob')}}</label>
+                <input type="date" class="form-control" id="dob" name="dob" value="{{$user_details->dob}}">
             </div>
             <div class="form-group">
                 <label for="country">{{__('Country')}}</label>

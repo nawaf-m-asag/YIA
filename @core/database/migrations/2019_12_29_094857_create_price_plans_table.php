@@ -17,7 +17,7 @@ class CreatePricePlansTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('price');
-            $table->integer('categories_id',false,true);
+            $table->integer('points')->default(0);
             $table->string('status')->nullable();
             $table->string('highlight')->nullable();
             $table->string('lang')->nullable();
