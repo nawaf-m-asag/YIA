@@ -134,7 +134,6 @@ class UserDashboardController extends Controller
         User::find(Auth::guard()->user()->id)->update([
             'name' => $request->name,
             'email' => $request->email,
-            'image' => $request->image,
             'phone' => $request->phone,
             'state' => $request->state,
             'city' => $request->city,
@@ -721,4 +720,40 @@ class UserDashboardController extends Controller
             return back()->with(['msg' => __('Image Upload '),'type' => 'success']);
     }
    
+    public function add_certificate(Request $request)
+    {
+        $user_details = Auth::guard('web')->user();
+
+        return view('frontend.user.dashboard.edit-certificate')->with(['user_details' =>$user_details]);
+    }
+    public function post_certificate(Request $request)
+    {
+        $this->validate($request, [
+            'university_name' => 'required|string|max:191',
+            'specialization' => 'required|string|max:191',
+            'graduation_date' => 'required|date',
+            'attached_file'=>'nullable'
+        ]);
+        if ($request->hasFile('attached_file')) {
+            $file_extenstion = $request->attached_file->getClientOriginalExtension();
+            if (in_array($file_extenstion,['doc','docx','jpg','jpeg','png','mp3','mp4','pdf','txt','zip'])) {
+                $file_name_with_ext = $request->attached_file->getClientOriginalName();
+                $file_name = pathinfo($file_name_with_ext, PATHINFO_FILENAME);
+                $file_name = strtolower(Str::slug($file_name));
+
+                $file_db = $file_name . time() . '.' . $file_extenstion;
+
+                $request->attached_file->move('assets/uploads/specialization/', $file_db);
+                User::find(Auth::guard()->user()->id)->update(['attached_file' => $file_db]);
+            }
+        }    
+        User::find(Auth::guard()->user()->id)->update([
+            'university_name' => $request->university_name,
+            'specialization' => $request->specialization,
+            'graduation_date' => $request->graduation_date,
+            ]
+        );
+
+        return redirect()->back()->with(['msg' => __('Profile Update Success'), 'type' => 'success']);
+    }
 }

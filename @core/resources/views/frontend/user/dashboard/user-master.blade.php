@@ -55,6 +55,9 @@
                                 <a class="nav-link @if(request()->routeIs('user.home.edit.profile')) active @endif " href="{{route('user.home.edit.profile')}}">{{__('Edit Profile')}}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link @if(request()->routeIs('user.home.edit.profile.add.certificate')) active @endif " href="{{route('user.home.edit.profile.add.certificate')}}">{{__('Add Certificate')}}</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link @if(request()->routeIs('user.home.change.password')) active @endif " href="{{route('user.home.change.password')}}">{{__('Change Password')}}</a>
                             </li>
                             <li class="nav-item">

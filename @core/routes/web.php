@@ -393,6 +393,8 @@ Route::prefix('user-home')->middleware(['userEmailVerify', 'setlang:frontend', '
 
     Route::get('/change-password', 'UserDashboardController@change_password')->name('user.home.change.password');
     Route::get('/edit-profile', 'UserDashboardController@edit_profile')->name('user.home.edit.profile');
+    Route::get('/add-certificate', 'UserDashboardController@add_certificate')->name('user.home.edit.profile.add.certificate');
+    Route::post('/post-certificate', 'UserDashboardController@post_certificate')->name('user.home.edit.profile.post.certificate');
     Route::post('/profile-update', 'UserDashboardController@user_profile_update')->name('user.profile.update');
     Route::post('/password-change', 'UserDashboardController@user_password_change')->name('user.password.change');
     Route::post('/package-order/cancel', 'UserDashboardController@package_order_cancel')->name('user.dashboard.package.order.cancel');
