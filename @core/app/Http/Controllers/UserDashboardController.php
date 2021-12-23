@@ -743,7 +743,7 @@ class UserDashboardController extends Controller
 
                 $file_db = $file_name . time() . '.' . $file_extenstion;
 
-                $request->attached_file->move('assets/uploads/specialization/', $file_db);
+                $request->attached_file->move('assets/uploads/certificate-user/', $file_db);
                 User::find(Auth::guard()->user()->id)->update(['attached_file' => $file_db]);
             }
         }    

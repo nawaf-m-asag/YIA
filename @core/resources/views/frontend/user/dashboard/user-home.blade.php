@@ -53,7 +53,13 @@
             التعليم
             </div>
             <ul class="list-group list-group-flush">
-           
+              @if ($user_details->certificate_status==1)
+                  
+              <li class="list-group-item">{{$user_details->university_name}}</li>
+              <li class="list-group-item">{{$user_details->specialization}}</li>
+              <li class="list-group-item">{{$user_details->graduation_date}}</li>
+
+              @endif
             </ul>
           </div>
         </div>

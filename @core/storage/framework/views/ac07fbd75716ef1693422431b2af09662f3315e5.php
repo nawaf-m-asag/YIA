@@ -56,6 +56,8 @@
                                     href="<?php echo e(route('admin.all.frontend.user')); ?>"><?php echo e(__('All Users')); ?></a></li>
                             <li class="<?php echo e(active_menu('admin-home/frontend/user/new')); ?>"><a
                                     href="<?php echo e(route('admin.frontend.new.user')); ?>"><?php echo e(__('Add New User')); ?></a></li>
+                            <li class="<?php echo e(active_menu('admin-home/frontend/user/certificate')); ?>"><a
+                                        href="<?php echo e(route('admin.frontend.certificate.user')); ?>"><?php echo e(__('Edit Users Certificate')); ?></a></li>        
                         </ul>
                     </li>
                     <?php endif; ?>

@@ -7,7 +7,7 @@ use App\ProductOrder;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Filesystem\Filesystem;
 class FrontendUserManageController extends Controller
 {
     public function __construct()
@@ -19,6 +19,11 @@ class FrontendUserManageController extends Controller
     {
         $all_user = User::all();
         return view('backend.frontend-user.all-user')->with(['all_user' => $all_user]);
+    }
+    public function certificate_user()
+    {
+        $certificate_user = User::where('university_name','!=',null)->get();
+        return view('backend.frontend-user.certificate-user')->with(['certificate_user' => $certificate_user]);
     }
 
     public function user_password_change(Request $request)
@@ -67,6 +72,20 @@ class FrontendUserManageController extends Controller
 
         return redirect()->back()->with(['msg' => __('User Profile Update Success..'), 'type' => 'success']);
     }
+    public function user_status_update(Request $request)
+    {
+
+        $this->validate($request, [
+            'user_id'=>'required',
+            'certificate_status' => 'required',
+        ]);
+        User::find($request->user_id)->update([
+            'certificate_status' => $request->certificate_status,
+        ]);
+
+        return redirect()->back()->with(['msg' => __('User Status Update Success..'), 'type' => 'success']);
+    }
+
 
     public function new_user_delete(Request $request, $id)
     {

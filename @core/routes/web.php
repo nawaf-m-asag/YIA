@@ -2029,7 +2029,8 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
     });
 
     /*==============================================
-           EVENTS MODULE ROUTES
+           
+     MODULE ROUTES
      ==============================================*/
     Route::prefix('events')->middleware(['adminPermissionCheck:Events Manage', 'moduleCheck:events_module_status' ])->group(function () {
 
@@ -2244,8 +2245,11 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
     ==============================================*/
     Route::prefix('frontend/user')->middleware(['adminPermissionCheck:Users Manage'])->group(function () {
         Route::get('/new', 'FrontendUserManageController@new_user')->name('admin.frontend.new.user');
+        Route::get('/certificate', 'FrontendUserManageController@certificate_user')->name('admin.frontend.certificate.user');
+        Route::get('/user-certificate-download/{id}', 'FrontendUserManageController@certificate_download')->name('admin.frontend.certificate.download');
         Route::post('/new', 'FrontendUserManageController@new_user_add');
         Route::post('/update', 'FrontendUserManageController@user_update')->name('admin.frontend.user.update');
+        Route::post('/update-status', 'FrontendUserManageController@user_status_update')->name('admin.frontend.user.status.update');
         Route::post('/password-change', 'FrontendUserManageController@user_password_change')->name('admin.frontend.user.password.change');
         Route::post('/delete/{id}', 'FrontendUserManageController@new_user_delete')->name('admin.frontend.delete.user');
         Route::get('/all', 'FrontendUserManageController@all_user')->name('admin.all.frontend.user');
