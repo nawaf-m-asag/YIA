@@ -7,7 +7,12 @@
                     <div class="col-4">
                             <div class="pic-holder">
                               <!-- uploaded pic shown here -->
-                              {!! render_image_markup_by_attachment_id($user_details->image,'pic') !!}                              <label for="newProfilePhoto" class="upload-file-block">
+                              @php
+                              $user_img = get_attachment_image_by_id($user_details->image,null,true);
+                              @endphp
+                               @if (!empty($user_img))
+                               <img  src="{{$user_img['img_url']}}" alt="Card image cap">
+                               @endif                             <label for="newProfilePhoto" class="upload-file-block">
                                 <div class="text-center">
                                   <div class="mb-2">
                                     <i class="fa fa-camera fa-2x"></i>
@@ -18,15 +23,16 @@
                                     <Input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" style="display: none" />
                                 </form>
                                   <div class="text-uppercase">
-                                    Update <br /> Profile Photo
+                                   {{ __('Update')}} <br /> {{__('Profile Photo')}}
                                   </div>
                                 </div>
                               </label>
                             </div>
 
                     </div>
-                    <div class="col-8 p-4">
-                      <h3>{{$user_details->name}}</h3>
+                    <div class="col-8 p-4" style="text-align: right">
+                      <h3>{{$user_details->name}} @if (!empty($package_orders)) /{{$package_orders->package_name}} @endif</h3>
+                      <h4>{{__('AIY number')}}: {{$user_details->id}}</h4>
                    </div>
                 </div>    
             </div>
@@ -36,28 +42,65 @@
         <div class="col-4">
           <div class="card">
             <div class="card-header">
-              المعلومات الشخصية
+             {{__('About me')}}
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{$user_details->address}}</li>
-              <li class="list-group-item">{{$user_details->phone}}</li>
-              <li class="list-group-item">{{$user_details->email}}</li>
-              <li class="list-group-item">{{$user_details->country}}</li>
-              <li class="list-group-item">{{$user_details->city}}</li>
+              <li class="list-group-item">
+                <label for="">
+                  {{__('Address')}}
+                </label>
+                <br>
+                {{$user_details->address}}</li>
+              <li class="list-group-item">
+                <label for="">
+                  {{__('Phone')}}
+                </label>
+                <br>
+                {{$user_details->phone}}</li>
+              <li class="list-group-item">
+                <label for="">
+                  {{__('Email')}}
+                </label>
+                <br>
+                {{$user_details->email}}</li>
+              <li class="list-group-item">
+                <label for="">
+                  {{__('Country')}}
+                </label>
+                <br>
+                {{$user_details->country}}</li>
+              <li class="list-group-item">
+                <label for="">
+                  {{__('City')}}
+                </label>
+                <br>
+                {{$user_details->city}}</li>
             </ul>
           </div>
         </div>
         <div class="col-4">
           <div class="card">
             <div class="card-header">
-            التعليم
+            {{__('education')}}
             </div>
             <ul class="list-group list-group-flush">
               @if ($user_details->certificate_status==1)
                   
-              <li class="list-group-item">{{$user_details->university_name}}</li>
-              <li class="list-group-item">{{$user_details->specialization}}</li>
-              <li class="list-group-item">{{$user_details->graduation_date}}</li>
+              <li class="list-group-item">
+                <label for=""> {{__('University Name')}}</label>
+                <br>
+                {{$user_details->university_name}}</li>
+              <li class="list-group-item">
+              <label for="">{{__('Specialization')}}</label>
+              <br>
+                {{$user_details->specialization}}
+              </li>
+              <li class="list-group-item">
+                <label for="">
+                  {{__('Graduation Date')}}
+                </label>
+                <br>
+                {{$user_details->graduation_date}}</li>
 
               @endif
             </ul>
@@ -66,11 +109,44 @@
         <div class="col-4">
           <div class="card">
             <div class="card-header">
-             معلومات العضوية
+            {{__('My member info')}}
             </div>
+            @if (!empty($package_orders))
             <ul class="list-group list-group-flush">
-      
+              
+              <li class="list-group-item">
+                <label for="">
+                  {{__('member name')}}
+                </label>
+                <br>
+                {{$package_orders->package_name}}</li>
+                <li class="list-group-item">
+                  <label for="">
+                    {{__('Expiry date')}}
+                  </label>
+                  <br>
+                  @php
+                       $dateString =$package_orders->created_at;
+                        $t = strtotime($dateString);
+                        $t2 = strtotime('+1 years', $t);
+                        echo date('Y-m-d', $t2) . PHP_EOL; 
+                  @endphp 
+                </li>
+               
             </ul>
+            @endif
+            <br>
+            <br>
+            <br>
+            @if (empty($package_orders))
+            <a href="{{route('frontend.price.plan')}}" type="button" class="btn btn-danger">
+              {{__('Join')}} 
+              @else
+              <a href="{{route('frontend.plan.order',$package_orders->package_id)}}" type="button" class="btn btn-danger">
+              {{__('renew')}} 
+              @endif
+            </a>
+           
           </div>
         </div>
     </div>    
