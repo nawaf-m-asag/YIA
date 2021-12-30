@@ -106,6 +106,11 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::post('/appointment-paytm-ipn', 'Frontend\AppointmentBookingController@paytm_ipn')->name('frontend.appointment.paytm.ipn');
 
 });
+Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_mode','moduleCheck:appointment_module_status']], function () {
+
+    //appointment
+    Route::get('members' , 'Frontend\MembersController@page')->name('frontend.members');
+});
 
 
 /*==============================================
@@ -323,6 +328,8 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::get('/' . $faq_page_slug, 'FrontendController@faq_page')->name('frontend.faq');
     Route::get('/' . $team_page_slug, 'FrontendController@team_page')->name('frontend.team');
     Route::get('/' . $price_plan_page_slug, 'FrontendController@price_plan_page')->name('frontend.price.plan');
+    Route::get('/partners', 'FrontendController@partners_page')->name('frontend.partners');
+    Route::get('/partners/{id}', 'FrontendController@partners_single_page')->name('frontend.partners.single_page');
     Route::get('/' . $contact_page_slug, 'FrontendController@contact_page')->name('frontend.contact');
     Route::get('/' . $quote_page_slug, 'FrontendController@request_quote')->name('frontend.request.quote');
 

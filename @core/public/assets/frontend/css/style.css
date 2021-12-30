@@ -20702,3 +20702,80 @@ body.home_variant_16 .back-to-top {
 .single-product-details .top-content .single-add-to-card-wrapper .addtocart.download {
     line-height: 40px;
 }
+
+.members-single-item  .cat {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background-color: var(--main-color-one);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600
+}
+
+.strategic-partner{
+    width: 100%;
+    height: 230px;
+    padding: 10px;
+    border-top: solid 3px #f83a01;
+    background:#ececec;
+}
+@media (max-width: 468px) {
+    .partner-logo{
+        width: 100%;
+        height: unset !important;
+        float: unset !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px;
+
+    }
+    .strategic-partner{
+        height: 400px;
+    }
+    .strategic-partner .text h4{
+        margin-top: 20px;
+    
+    }
+    .strategic-partner .text{
+        padding: 0px;
+    
+    }
+    .partner-logo img{
+        margin: 20px;
+    
+    }
+}
+.partner-logo{
+    width: 200px;
+    float: right;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.partner-logo img{
+    width: 150px;
+    display:block;
+
+}
+.strategic-partner .text{
+ 
+    text-align: right;
+    padding: 20px;
+
+}
+.strategic-partner .text .btn{
+background-color:  var(--main-color-one);
+position:absolute;
+bottom: 10px;
+}
+.strategic-partner .text .btn:hover{
+    background-color:  var(--main-color-two);
+    position:absolute;
+    bottom: 10px;
+    }
+

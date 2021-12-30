@@ -696,7 +696,7 @@ class FrontendController extends Controller
     {
         $default_lang = Language::where('default', 1)->first();
         $lang = !empty(session()->get('lang')) ? session()->get('lang') : $default_lang->slug;
-        $all_price_plan = PricePlan::where(['lang' => $lang])->get()->groupBy('categories_id');
+        $all_price_plan = PricePlan::where(['lang' => $lang])->get();
         return view('frontend.pages.price-plan')->with(['all_price_plan' => $all_price_plan]);
     }
 
@@ -1434,5 +1434,16 @@ class FrontendController extends Controller
         }
 
         return back()->with(['msg' => __('file download success'),'type' => 'success']);
+    }
+
+    public function partners_page()
+    {
+        $all_partners = Brand::all();
+        return view('frontend.pages.partners')->with([ 'all_partners' => $all_partners]);
+    }
+    public function partners_single_page(Request $request,$id)
+    {
+        $partner = Brand::findOrFail($id);
+        return view('frontend.pages.partners_single')->with([ 'partner' => $partner]);
     }
 }//end class
