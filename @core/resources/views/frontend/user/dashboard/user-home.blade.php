@@ -1,4 +1,15 @@
 @extends('frontend.user.dashboard.user-master')
+@section('style')
+<style>
+body{
+text-align: right
+}
+.join{
+  margin: 40px;
+}
+</style>
+
+@endsection
 @section('section')
     <div class="row">
         <div class="col-lg-12 mb-3">
@@ -136,20 +147,20 @@
             </ul>
             @endif
             <br>
-            <br>
-            <br>
             @if (empty($package_orders))
-            <a href="{{route('frontend.price.plan')}}" type="button" class="btn btn-danger">
+            <a href="{{route('frontend.price.plan')}}" type="button" class="btn join btn-danger">
               {{__('Join')}} 
               @else
-              <a href="{{route('frontend.plan.order',$package_orders->package_id)}}" type="button" class="btn btn-danger">
+              <a href="{{route('frontend.plan.order',$package_orders->package_id)}}" type="button" class="btn join btn-danger">
               {{__('renew')}} 
               @endif
             </a>
-           
+      
           </div>
         </div>
     </div>    
+    <br>
+    <br>
 @endsection
 @section('scripts')
     
