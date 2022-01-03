@@ -1,6 +1,6 @@
 @extends('backend.admin-master')
 @section('site-title')
-    {{__('Brand Settings')}}
+    عضويات الشركات و الجامعات
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{asset('assets/backend/css/dropzone.css')}}">
@@ -39,14 +39,14 @@
             <div class="col-lg-6 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">{{__('All Brand Items')}}</h4>
+                        <h4 class="header-title">الكل</h4>
                         <div class="bulk-delete-wrapper">
                             <div class="select-box-wrap">
                                 <select name="bulk_option" id="bulk_option">
-                                    <option value="">{{{__('Bulk Action')}}}</option>
-                                    <option value="delete">{{{__('Delete')}}}</option>
+                                    <option value="">اجراء جماعي</option>
+                                    <option value="delete">حذف</option>
                                 </select>
-                                <button class="btn btn-primary btn-sm" id="bulk_delete_btn">{{__('Apply')}}</button>
+                                <button class="btn btn-primary btn-sm" id="bulk_delete_btn">تطبيق</button>
                             </div>
                         </div>
                         <div class="table-wrap table-responsive">
@@ -57,11 +57,13 @@
                                     <input type="checkbox" class="all-checkbox">
                                 </div>
                             </th>
-                            <th>{{__('ID')}}</th>
-                            <th>{{__('Title')}}</th>
-                            <th>{{__('Url')}}</th>
-                            <th>{{__('Image')}}</th>
-                            <th>{{__('Action')}}</th>
+                            <th>المعرف</th>
+                            <th>النوع</th>
+                            <th>العنوان</th>
+                            <th>وصف</th>
+                            <th>الرابط</th>
+                            <th>الصورة</th>
+                            <th>العمليات</th>
                             </thead>
                             <tbody>
                             @foreach($all_brand as $data)
@@ -72,7 +74,15 @@
                                         </div>
                                     </td>
                                     <td>{{$data->id}}</td>
+                                    <td>
+                                        @if ($data->type==0)
+                                            شركة
+                                        @else
+                                            جامعة
+                                        @endif
+                                    </td>
                                     <td>{{$data->title}}</td>
+                                     <td>{{$data->describe}}</td>
                                     <td>{{$data->url}}</td>
                                     <td>
                                         @php
@@ -98,6 +108,8 @@
                                            class="btn btn-xs btn-primary btn-sm mb-3 mr-1 brand_edit_btn"
                                            data-id="{{$data->id}}"
                                            data-title="{{$data->title}}"
+                                           data-type="{{$data->type}}"
+                                           data-describe="{{$data->describe}}"
                                            data-url="{{$data->url}}"
                                            data-imageid="{{$data->image}}"
                                            data-image="{{$img_url}}"
@@ -116,29 +128,40 @@
             <div class="col-lg-6 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">{{__('New Brand')}}</h4>
+                        <h4 class="header-title">اضافة جديد</h4>
                         <form action="{{route('admin.brands')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="title">{{__('Title')}}</label>
-                                <input type="text" class="form-control"  id="title"  name="title" placeholder="{{__('Title')}}">
+                                <label for="type">النوع</label>
+                                <select class="form-control" name="type" id="type">
+                                    <option value="0">شركة</option>
+                                    <option value="1">جامعة</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="url">{{__('URl')}}</label>
-                                <input type="text" class="form-control"  id="url"  name="url" placeholder="{{__('Url')}}">
+                                <label for="title">العنوان</label>
+                                <input type="text" class="form-control"  id="title"  name="title" placeholder="العنوان">
                             </div>
                             <div class="form-group">
-                                <label for="image">{{__('Image')}}</label>
+                                <label for="describe">الوصف</label>
+                                <textarea type="text" class="form-control"  id="describe"  name="describe" placeholder="الوصف"> </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="url">الرابط</label>
+                                <input type="text" class="form-control"  id="url"  name="url" placeholder="الرابط">
+                            </div>
+                            <div class="form-group">
+                                <label for="image">الصورة</label>
                                 <div class="media-upload-btn-wrapper">
                                     <div class="img-wrap"></div>
                                     <input type="hidden" name="image">
-                                    <button type="button" class="btn btn-info media_upload_form_btn" data-btntitle="Select Brand Image" data-modaltitle="Upload Brand Image" data-toggle="modal" data-target="#media_upload_modal">
-                                        {{__('Upload Image')}}
+                                    <button type="button" class="btn btn-info media_upload_form_btn" data-btntitle="تحديد" data-modaltitle="رفع صورة" data-toggle="modal" data-target="#media_upload_modal">
+                                        رفع صورة
                                     </button>
                                 </div>
-                                <small>{{__('Recommended image size 160x80')}}</small>
+                               
                             </div>
-                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">{{__('Add New')}}</button>
+                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">اضافة</button>
                         </form>
                     </div>
                 </div>
@@ -150,7 +173,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{__('Edit Brand Item')}}</h5>
+                    <h5 class="modal-title">تحرير</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
                 </div>
                 <form action="{{route('admin.brands.update')}}" id="brand_edit_modal_form"  method="post" enctype="multipart/form-data">
@@ -158,28 +181,39 @@
                         @csrf
                         <input type="hidden" class="form-control" name="id"  id="brand_id" >
                         <div class="form-group">
-                            <label for="edit_title">{{__('Title')}}</label>
-                            <input type="text" class="form-control"  id="edit_title"  name="title" placeholder="{{__('Title')}}">
+                            <label for="type">النوع</label>
+                            <select class="form-control" name="type" id="edit_type">
+                                <option value="0">شركة</option>
+                                <option value="1">جامعة</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="edit_url">{{__('URl')}}</label>
-                            <input type="text" class="form-control"  id="edit_url"  name="url" placeholder="{{__('Url')}}">
+                            <label for="edit_title">العنوان</label>
+                            <input type="text" class="form-control"  id="edit_title"  name="title" placeholder="العنوان">
                         </div>
                         <div class="form-group">
-                            <label for="edit_image">{{__('Image')}}</label>
+                            <label for="edit_describe">الوصف</label>
+                            <textarea type="text" class="form-control"  id="edit_describe"  name="describe" placeholder="الوصف"> </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_url">الرابط</label>
+                            <input type="text" class="form-control"  id="edit_url"  name="url" placeholder="الرابط">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_image">الصورة</label>
                             <div class="media-upload-btn-wrapper">
                                 <div class="img-wrap"></div>
                                 <input type="hidden" id="edit_image" name="image" value="">
-                                <button type="button" class="btn btn-info media_upload_form_btn" data-btntitle="Select Brand Image" data-modaltitle="Upload Brand Image" data-toggle="modal" data-target="#media_upload_modal">
-                                    {{__('Upload Image')}}
+                                <button type="button" class="btn btn-info media_upload_form_btn" data-btntitle="تحديد" data-modaltitle="رفع صورة" data-toggle="modal" data-target="#media_upload_modal">
+                                   رفع صورة
                                 </button>
                             </div>
-                            <small>{{__('Recommended image size 160x80')}}</small>
+                          
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                        <button type="submit" class="btn btn-primary">{{__('Save Changes')}}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                        <button type="submit" class="btn btn-primary">حفظ</button>
                     </div>
                 </form>
             </div>
@@ -233,12 +267,16 @@
                 var el = $(this);
                 var id = el.data('id');
                 var title = el.data('title');
+                var type = el.data('type');
+                var describe = el.data('describe');
                 var form = $('#brand_edit_modal_form');
                 var image = el.data('image');
                 var imageid = el.data('imageid');
 
                 form.find('#brand_id').val(id);
                 form.find('#edit_title').val(title);
+                form.find('#edit_type').val(type);
+                 form.find('#edit_describe').val(describe);
                 form.find('#edit_url').val(el.data('url'));
 
                 if(imageid != ''){

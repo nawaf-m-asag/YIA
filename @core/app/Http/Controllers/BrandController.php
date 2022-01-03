@@ -22,6 +22,7 @@ class BrandController extends Controller
         $this->validate($request,[
             'title' => 'required|string|max:191',
             'image' => 'nullable|string|max:191',
+            'type'=>'nullable',
             'describe'=>'nullable|string',
             'url' => 'nullable|string|max:191',
         ]);
@@ -37,12 +38,14 @@ class BrandController extends Controller
             'title' => 'required|string|max:191',
             'image' => 'nullable|string|max:191',
             'describe'=>'nullable|string',
+            'type'=>'nullable',
             'url' => 'nullable|string|max:191',
         ]);
 
         Brand::find($request->id)->update([
             'title' => $request->title,
             'image' => $request->image,
+            'type' => $request->type,
             'describe'=>$request->describe,
             'url' => $request->url,
         ]);

@@ -110,6 +110,7 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
 
     //appointment
     Route::get('members' , 'Frontend\MembersController@page')->name('frontend.members');
+    Route::get('members/{id}' , 'Frontend\MembersController@page_single')->name('frontend.members.single');
 });
 
 
@@ -330,6 +331,8 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::get('/' . $price_plan_page_slug, 'FrontendController@price_plan_page')->name('frontend.price.plan');
     Route::get('/partners', 'FrontendController@partners_page')->name('frontend.partners');
     Route::get('/partners/{id}', 'FrontendController@partners_single_page')->name('frontend.partners.single_page');
+    Route::get('/universities', 'FrontendController@universities_page')->name('frontend.universities');
+    Route::get('/universities/{id}', 'FrontendController@partners_single_page')->name('frontend.universities.single_page');
     Route::get('/' . $contact_page_slug, 'FrontendController@contact_page')->name('frontend.contact');
     Route::get('/' . $quote_page_slug, 'FrontendController@request_quote')->name('frontend.request.quote');
 
