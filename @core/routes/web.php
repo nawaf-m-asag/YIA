@@ -329,6 +329,7 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::get('/' . $faq_page_slug, 'FrontendController@faq_page')->name('frontend.faq');
     Route::get('/' . $team_page_slug, 'FrontendController@team_page')->name('frontend.team');
     Route::get('/' . $price_plan_page_slug, 'FrontendController@price_plan_page')->name('frontend.price.plan');
+    Route::get('/discounts', 'FrontendController@discounts_page')->name('frontend.discounts');
     Route::get('/partners', 'FrontendController@partners_page')->name('frontend.partners');
     Route::get('/partners/{id}', 'FrontendController@partners_single_page')->name('frontend.partners.single_page');
     Route::get('/universities', 'FrontendController@universities_page')->name('frontend.universities');
@@ -1922,6 +1923,17 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
         Route::post('/update', 'BrandController@update')->name('admin.brands.update');
         Route::post('/delete/{id}', 'BrandController@delete')->name('admin.brands.delete');
         Route::post('/bulk-action', 'BrandController@bulk_action')->name('admin.brands.bulk.action');
+    });
+      /*==============================================
+       discounts LOGOS
+    ==============================================*/
+    Route::prefix('discounts')->middleware(['adminPermissionCheck:Brand Logos'])->group(function () {
+        //brand logos
+        Route::get('/', 'DiscountController@index')->name('admin.discounts');
+        Route::post('/', 'DiscountController@store');
+        Route::post('/update', 'DiscountController@update')->name('admin.discounts.update');
+        Route::post('/delete/{id}', 'DiscountController@delete')->name('admin.discounts.delete');
+        Route::post('/bulk-action', 'DiscountController@bulk_action')->name('admin.discounts.bulk.action');
     });
 
     /*==============================================

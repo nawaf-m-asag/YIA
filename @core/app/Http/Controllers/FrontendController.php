@@ -57,6 +57,7 @@ use App\Counterup;
 use App\Testimonial;
 use App\VideoGallery;
 use App\Works;
+use App\Discounts;
 use App\WorksCategory;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Filesystem\Filesystem;
@@ -1438,12 +1439,23 @@ class FrontendController extends Controller
 
     public function partners_page()
     {
-        $all_partners = Brand::all();
+        $all_partners = Brand::where('type',0)->get();
+        return view('frontend.pages.partners')->with([ 'all_partners' => $all_partners]);
+    }
+    public function universities_page()
+    {
+        $all_partners = Brand::where('type',1)->get();
         return view('frontend.pages.partners')->with([ 'all_partners' => $all_partners]);
     }
     public function partners_single_page(Request $request,$id)
     {
         $partner = Brand::findOrFail($id);
         return view('frontend.pages.partners_single')->with([ 'partner' => $partner]);
+    }
+
+    public function discounts_page()
+    {
+        $all_discounts = Discounts::all();
+        return view('frontend.pages.discounts')->with([ 'all_discounts' => $all_discounts]);
     }
 }//end class
