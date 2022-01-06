@@ -7,15 +7,58 @@ text-align: right
 .join{
   margin: 40px;
 }
+.pic-holder {
+  width: 200px;
+  height: 200px;
+}
+.nav-tabs{
+border-bottom: solid 2px #d62222;
+margin: 20px;
+width: 100%;
+padding-bottom: 2px
+}
+.nav-tabs button{
+background: #e56116;
+border: unset;
+}
+
+.transcript{
+  text-align: center;
+  line-height: 50px;
+  background: #e9e9e9!important;
+
+  height: 100px;
+}
+.transcript a{
+ font-size: 20px;
+}
+.transcript a:hover{
+color:#d62222;
+}
 </style>
 
 @endsection
 @section('section')
     <div class="row">
+      
+  
+    
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Transcript</a>
+        </li>
+      </ul>
+              <br>
+              <br>
+
         <div class="col-lg-12 mb-3">
             <div class="user-img card">
                 <div class="row ">
-                    <div class="col-4">
+                  
+                    <div class="col-lg-4">
                             <div class="pic-holder">
                               <!-- uploaded pic shown here -->
                               @php
@@ -41,7 +84,7 @@ text-align: right
                             </div>
 
                     </div>
-                    <div class="col-8 p-4" style="text-align: right">
+                    <div class="col-lg-8 p-4" style="text-align: right">
                       <h3>{{$user_details->name}} @if (!empty($package_orders)) /{{$package_orders->package_name}} @endif</h3>
                       <h4>{{__('AIY number')}}: {{$user_details->id}}</h4>
                    </div>
@@ -49,116 +92,142 @@ text-align: right
             </div>
         </div>
     </div>
-    <div class="row m-1">
-        <div class="col-4">
-          <div class="card">
-            <div class="card-header">
-             {{__('About me')}}
-            </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <label for="">
-                  {{__('Address')}}
-                </label>
-                <br>
-                {{$user_details->address}}</li>
-              <li class="list-group-item">
-                <label for="">
-                  {{__('Phone')}}
-                </label>
-                <br>
-                {{$user_details->phone}}</li>
-              <li class="list-group-item">
-                <label for="">
-                  {{__('Email')}}
-                </label>
-                <br>
-                {{$user_details->email}}</li>
-              <li class="list-group-item">
-                <label for="">
-                  {{__('Country')}}
-                </label>
-                <br>
-                {{$user_details->country}}</li>
-              <li class="list-group-item">
-                <label for="">
-                  {{__('City')}}
-                </label>
-                <br>
-                {{$user_details->city}}</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card">
-            <div class="card-header">
-            {{__('education')}}
-            </div>
-            <ul class="list-group list-group-flush">
-              @if ($user_details->certificate_status==1)
-                  
-              <li class="list-group-item">
-                <label for=""> {{__('University Name')}}</label>
-                <br>
-                {{$user_details->university_name}}</li>
-              <li class="list-group-item">
-              <label for="">{{__('Specialization')}}</label>
-              <br>
-                {{$user_details->specialization}}
-              </li>
-              <li class="list-group-item">
-                <label for="">
-                  {{__('Graduation Date')}}
-                </label>
-                <br>
-                {{$user_details->graduation_date}}</li>
-
-              @endif
-            </ul>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card">
-            <div class="card-header">
-            {{__('My member info')}}
-            </div>
-            @if (!empty($package_orders))
-            <ul class="list-group list-group-flush">
-              
-              <li class="list-group-item">
-                <label for="">
-                  {{__('member name')}}
-                </label>
-                <br>
-                {{$package_orders->package_name}}</li>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row m-1">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+               {{__('About me')}}
+              </div>
+              <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <label for="">
-                    {{__('Expiry date')}}
+                    {{__('Address')}}
                   </label>
                   <br>
-                  @php
-                       $dateString =$package_orders->created_at;
-                        $t = strtotime($dateString);
-                        $t2 = strtotime('+1 years', $t);
-                        echo date('Y-m-d', $t2) . PHP_EOL; 
-                  @endphp 
+                  {{$user_details->address}}</li>
+                <li class="list-group-item">
+                  <label for="">
+                    {{__('Phone')}}
+                  </label>
+                  <br>
+                  {{$user_details->phone}}</li>
+                <li class="list-group-item">
+                  <label for="">
+                    {{__('Email')}}
+                  </label>
+                  <br>
+                  {{$user_details->email}}</li>
+                <li class="list-group-item">
+                  <label for="">
+                    {{__('Country')}}
+                  </label>
+                  <br>
+                  {{$user_details->country}}</li>
+                <li class="list-group-item">
+                  <label for="">
+                    {{__('City')}}
+                  </label>
+                  <br>
+                  {{$user_details->city}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+              {{__('education')}}
+              </div>
+              <ul class="list-group list-group-flush">
+                @if ($user_details->certificate_status==1)
+                    
+                <li class="list-group-item">
+                  <label for=""> {{__('University Name')}}</label>
+                  <br>
+                  {{$user_details->university_name}}</li>
+                <li class="list-group-item">
+                <label for="">{{__('Specialization')}}</label>
+                <br>
+                  {{$user_details->specialization}}
                 </li>
-               
-            </ul>
-            @endif
-            <br>
-            @if (empty($package_orders))
-            <a href="{{route('frontend.price.plan')}}" type="button" class="btn join btn-danger">
-              {{__('Join')}} 
-              @else
-              <a href="{{route('frontend.plan.order',$package_orders->package_id)}}" type="button" class="btn join btn-danger">
-              {{__('renew')}} 
+                <li class="list-group-item">
+                  <label for="">
+                    {{__('Graduation Date')}}
+                  </label>
+                  <br>
+                  {{$user_details->graduation_date}}</li>
+  
+                @endif
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+              {{__('My member info')}}
+              </div>
+              @if (!empty($package_orders))
+              <ul class="list-group list-group-flush">
+                
+                <li class="list-group-item">
+                  <label for="">
+                    {{__('member name')}}
+                  </label>
+                  <br>
+                  {{$package_orders->package_name}}</li>
+                  <li class="list-group-item">
+                    <label for="">
+                      {{__('Expiry date')}}
+                    </label>
+                    <br>
+                    @php
+                         $dateString =$package_orders->created_at;
+                          $t = strtotime($dateString);
+                          $t2 = strtotime('+1 years', $t);
+                          echo date('Y-m-d', $t2) . PHP_EOL; 
+                    @endphp 
+                  </li>
+                 
+              </ul>
               @endif
-            </a>
-      
+              <br>
+              @if (empty($package_orders))
+              <a href="{{route('frontend.price.plan')}}" type="button" class="btn join btn-danger">
+                {{__('Join')}} 
+                @else
+                <a href="{{route('frontend.plan.order',$package_orders->package_id)}}" type="button" class="btn join btn-danger">
+                {{__('renew')}} 
+                @endif
+              </a>
+        
+            </div>
+          </div>
+      </div> 
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card transcript">
+              <h4 class="p-1">transcript</h4>
+              <a href="{{route('user.home.course.transcript')}}"> عــرض الكــل <i class="fas fa-angle-left"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card transcript">
+              <h4 class="p-1">شهدات خارجية</h4>
+              <a href=""> عــرض الكــل <i class="fas fa-angle-left"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="card transcript">
+              <h4 class="p-1">تصنيفات الكرسات</h4>
+              <a href="{{route('frontend.course')}}"> عــرض تصنفات الكرسات <i class="fas fa-angle-left"></i></a>
+            </div>
           </div>
         </div>
-    </div>    
+      </div>
+  </div>
     <br>
     <br>
 @endsection
@@ -166,7 +235,7 @@ text-align: right
     
 
 <script>
-    $(document).on("change", ".uploadProfileInput", function () {
+  $(document).on("change", ".uploadProfileInput", function () {
   var triggerInput = this;
   var currentImg = $(this).closest(".pic-holder").find(".pic").attr("src");
   var holder = $(this).closest(".pic-holder");

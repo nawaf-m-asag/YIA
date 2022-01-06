@@ -20779,3 +20779,14 @@ bottom: 10px;
     bottom: 10px;
     }
 
+ .members-single-item .membership{
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    background-color: var(--main-color-one);
+    padding: 5px 15px;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 600
+}

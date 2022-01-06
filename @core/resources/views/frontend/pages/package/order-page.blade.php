@@ -94,7 +94,14 @@
                 <div class="col-lg-4">
                     <div class="right-content-area">
                         <div class="single-price-plan-01 style-02 active">
+                            @php
+                            $plan_img = get_attachment_image_by_id($order_details->image,null,true);
+                            @endphp
+                             @if (!empty($plan_img))
+                             <img class="card-img-top" src="{{$plan_img['img_url']}}" alt="Card image cap">
+                             @endif
                             <div class="price-header">
+                              
                                 <div class="name-box">
                                     <h4 class="name">{{$order_details->title}}</h4>
                                 </div>

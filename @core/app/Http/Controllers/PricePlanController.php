@@ -38,6 +38,7 @@ class PricePlanController extends Controller
             'btn_text' => 'required|string|max:191',
             'btn_url' => 'nullable|string|max:191',
             'features' => 'required|string',
+            'image'=>'nullable',
         ]);
         PricePlan::create($request->all());
         return redirect()->back()->with(['msg' => __('New Price Plan Added...'),'type' => 'success']);
@@ -56,6 +57,7 @@ class PricePlanController extends Controller
             'btn_text' => 'required|string|max:191',
             'btn_url' => 'nullable|string|max:191',
             'features' => 'required|string',
+            'image' =>'nullable'
         ]);
 
         PricePlan::find($request->id)->update(
@@ -70,7 +72,8 @@ class PricePlanController extends Controller
                 'btn_text' => $request->btn_text,
                 'url_status' => $request->url_status,
                 'btn_url' => $request->btn_url,
-                'features' => $request->features
+                'features' => $request->features,
+                'image'=> $request->image
             ]
         );
 

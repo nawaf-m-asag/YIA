@@ -6,7 +6,7 @@
     <section class="login-page-wrapper">
         <div class="full-container">
             <div class="row">
-                <div class="col-3">
+                <div class="col-lg-3">
                     <div class="user-dashboard-wrapper">
                         <ul class="nav nav-pills" id="pills-tab" role="tablist">
                             <li class="mobile_nav">
@@ -74,7 +74,7 @@
                       
                     </div>
                 </div>
-                <div class="col-9">
+                <div class="col-lg-9">
                     <div class="container tab-content mt-5">
                         <div class="tab-pane active" role="tabpanel">
                             <div class="message-show margin-top-10">

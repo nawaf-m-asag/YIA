@@ -222,6 +222,12 @@
                             <span>{{__('Brand Logos')}}</span></a>
                     </li>
                     @endif
+                    @if(check_page_permission_by_string('Discount Logos'))
+                    <li class="main_dropdown {{active_menu('admin-home/discounts')}}">
+                        <a href="{{route('admin.discounts')}}" aria-expanded="true"><i class="ti-control-forward"></i>
+                            <span>{{__('Discount Logos')}}</span></a>
+                    </li>
+                    @endif
                     @if(check_page_permission_by_string('Team Members'))
                     <li class="main_dropdown {{active_menu('admin-home/team-member')}}">
                         <a href="{{route('admin.team.member')}}" aria-expanded="true"><i class="ti-control-forward"></i>

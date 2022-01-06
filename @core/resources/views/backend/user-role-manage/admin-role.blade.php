@@ -49,6 +49,7 @@
         "Appointment Manage",
         "Support Tickets",
         "Email Templates",
+        "Discount Logos"
     );
 @endphp
 

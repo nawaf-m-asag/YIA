@@ -226,6 +226,12 @@
                             <span><?php echo e(__('Brand Logos')); ?></span></a>
                     </li>
                     <?php endif; ?>
+                    <?php if(check_page_permission_by_string('Discount Logos')): ?>
+                    <li class="main_dropdown <?php echo e(active_menu('admin-home/discounts')); ?>">
+                        <a href="<?php echo e(route('admin.discounts')); ?>" aria-expanded="true"><i class="ti-control-forward"></i>
+                            <span><?php echo e(__('Discount Logos')); ?></span></a>
+                    </li>
+                    <?php endif; ?>
                     <?php if(check_page_permission_by_string('Team Members')): ?>
                     <li class="main_dropdown <?php echo e(active_menu('admin-home/team-member')); ?>">
                         <a href="<?php echo e(route('admin.team.member')); ?>" aria-expanded="true"><i class="ti-control-forward"></i>

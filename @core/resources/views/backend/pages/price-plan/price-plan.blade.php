@@ -3,6 +3,8 @@
     {{__('Price Plan')}}
 @endsection
 @section('style')
+    <link rel="stylesheet" href="{{asset('assets/backend/css/dropzone.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/backend/css/media-uploader.css')}}">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
@@ -62,6 +64,7 @@
                                         </th>
                                         <th>{{__('ID')}}</th>
                                         <th>{{__('Title')}}</th>
+                                        <th>{{__('Image')}}</th>
                                         <th>{{__('Price')}}</th>
                                         <th>{{__('Points')}}</th>
                                         <th>{{__('Status')}}</th>
@@ -80,6 +83,20 @@
                                                 <td>{{$data->id}}</td>
                                                 <td>
                                                     {{$data->title}}
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        $plan_img = get_attachment_image_by_id($data->image,null,true);
+                                                    @endphp
+                                                    @if (!empty($plan_img))
+                                                        <div class="attachment-preview">
+                                                            <div class="thumbnail">
+                                                                <div class="centered">
+                                                                    <img class="avatar user-thumb" src="{{$plan_img['img_url']}}" alt="">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </td>
                                                 <td>{{amount_with_currency_symbol($data->price)}}</td>
                                                 <td>{{$data->points}}</td>
@@ -106,6 +123,8 @@
                                                        data-price="{{$data->price}}"
                                                        data-points="{{$data->points}}"
                                                        data-lang="{{$data->lang}}"
+                                                       data-imageid="{{$data->image}}"
+                                                       data-image="{{$plan_img['img_url']}}"
                                                        data-features="{{$data->features}}"
                                                        data-btnText="{{$data->btn_text}}"
                                                        data-btnUrl="{{$data->btn_url}}"
@@ -215,6 +234,17 @@
                                 <option value="draft">{{__('Draft')}}</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="image">{{__('Image')}}</label>
+                            <div class="media-upload-btn-wrapper">
+                                <div class="img-wrap"></div>
+                                <input type="hidden" name="image">
+                                <button type="button" class="btn btn-info media_upload_form_btn" data-btntitle="{{__('Select Testimonial Image')}}" data-modaltitle="{{__('Upload Testimonial Image')}}" data-toggle="modal" data-target="#media_upload_modal">
+                                    {{__('Upload Image')}}
+                                </button>
+                            </div>
+                            <small>{{__('360x360 px image recommended')}}</small>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
@@ -225,6 +255,7 @@
         </div>
     </div>
 @endsection
+@include('backend.partials.media-upload.media-upload-markup')
 @section('script')
 
     <script>
@@ -274,6 +305,9 @@
                 var title = el.data('title');
                 var action = el.data('action');
                 var form = $('#price_plan_edit_modal_form');
+                var image = el.data('image');    
+                var imageid = el.data('imageid');
+     
                 form.attr('action',action);
                 form.find('#price_plan_id').val(id);
                 form.find('#edit_title').val(title);
@@ -288,8 +322,16 @@
                 form.find('.iconpicker-component i').attr('class',el.data('icon'));
                 form.find('#edit_language option[value='+el.data("lang")+']').attr('selected',true);
                 form.find('#edit_status option[value='+el.data("status")+']').attr('selected',true);
-                form.find('#category option[value='+el.data("category")+']').attr('selected',true);
+               form.find('#category option[value='+el.data("category")+']').attr('selected',true);
+                if(imageid != ''){
+                    
+                    form.find('.media-upload-btn-wrapper .img-wrap').html('<div class="attachment-preview"><div class="thumbnail"><div class="centered"><img class="avatar user-thumb" src="'+image+'" > </div></div></div>');
+                   
+                    form.find('.media-upload-btn-wrapper input').val(imageid);
+                    form.find('.media-upload-btn-wrapper .media_upload_form_btn').text('Change Image');
+                }
                 if(el.data('urlstatus') != ''){
+                   
                     form.find('#edit_url_status').attr('checked',true);
                     form.find('#edit_url_status').parent().parent().next().hide();
                 }
@@ -366,4 +408,6 @@
 
         } );
     </script>
+     <script src="{{asset('assets/backend/js/dropzone.js')}}"></script>
+     @include('backend.partials.media-upload.media-js')
 @endsection

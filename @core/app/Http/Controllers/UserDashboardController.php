@@ -44,7 +44,7 @@ class UserDashboardController extends Controller
     }
 
     public function user_index(){
-        $package_orders = Order::where('user_id',$this->logged_user_details()->id)->count();
+        $package_orders = Order::where('user_id',$this->logged_user_details()->id)->where('status','complete')->orderBy('id','desc')->first();
         $event_attendances = EventAttendance::where('user_id',$this->logged_user_details()->id)->count();
         $product_orders = ProductOrder::where('user_id',$this->logged_user_details()->id)->count();
         $donation = DonationLogs::where('user_id',$this->logged_user_details()->id)->count();
@@ -514,6 +514,20 @@ class UserDashboardController extends Controller
         $all_enrolls = CourseEnroll::with(['certificate','course'])->where('user_id',$this->logged_user_details()->id)->paginate(10);
         return view(self::BASE_PATH.'course-order')->with([ 'all_enrolls' => $all_enrolls]);
     }
+    public function course_transcript(Request $request){
+        $input_start=(isset($request->input_start)&&!empty($request->input_start))?$request->input_start:'';
+        $input_end=(isset($request->input_end)&&!empty($request->input_end))?$request->input_end:'';
+        $all_enrolls = CourseEnroll::with(['certificate','course'])->where('user_id',$this->logged_user_details()->id)->where('status','complete');
+        if(!empty($input_start)&&!empty($input_end)){
+            $all_enrolls->whereBetween('created_at',[$request->input_start,$request->input_end]);
+        }
+        $all_enrolls=$all_enrolls->get();
+        return view(self::BASE_PATH.'transcript')->with(
+            [ 'all_enrolls' => $all_enrolls,
+            'input_start'=>$input_start,
+            'input_end'=>$input_end,
+            ]);
+    }
 
 
     public function course_order_cancel(Request $request){
@@ -740,14 +754,12 @@ class UserDashboardController extends Controller
                 $file_name_with_ext = $request->attached_file->getClientOriginalName();
                 $file_name = pathinfo($file_name_with_ext, PATHINFO_FILENAME);
                 $file_name = strtolower(Str::slug($file_name));
-
                 $file_db = $file_name . time() . '.' . $file_extenstion;
-
                 $request->attached_file->move('assets/uploads/certificate-user/', $file_db);
                 User::find(Auth::guard()->user()->id)->update(['attached_file' => $file_db]);
             }
         }    
-        User::find(Auth::guard()->user()->id)->update([
+          User::find(Auth::guard()->user()->id)->update([
             'university_name' => $request->university_name,
             'specialization' => $request->specialization,
             'graduation_date' => $request->graduation_date,
@@ -755,5 +767,47 @@ class UserDashboardController extends Controller
         );
 
         return redirect()->back()->with(['msg' => __('Profile Update Success'), 'type' => 'success']);
+    }
+
+    public function generate_transcript(Request $request)
+    {
+        $start_date=(isset($request->start_date)&&!empty($request->start_date))?$request->start_date:'';
+        $end_date=(isset($request->end_date)&&!empty($request->end_date))?$request->end_date:'';
+        $all_course = CourseEnroll::with(['certificate','course'])->where('user_id',$this->logged_user_details()->id)->where('status','complete');
+        if(!empty($start_date)&&!empty($end_date)){
+            $all_course->whereBetween('created_at',[$start_date,$end_date]);
+        }
+
+        $all_course=$all_course->get();
+        if (empty($all_course)) {
+           
+            return redirect_404_page();
+        }
+
+        $print=false;
+        $download=false;
+        if(isset($request->print)){
+            $print=true;
+        }else{
+            $download=true;
+        }
+        $data=['all_course' => $all_course,
+        'user_name' => $this->logged_user_details()->name,
+        'start_date' => $start_date,
+        'end_date' => $end_date,
+        'print'=>$print
+        ];
+        
+        if($download==true)   {
+
+            $pdf = PDF::loadView('invoice.transcript',$data); 
+            $pdf->set_option('isHtml5ParserEnabled', true);
+            $pdf->loadHtml($str, 'UTF-8');
+            return $pdf->download('transcript.pdf');
+        }
+        else{
+            return view('invoice.transcript')->with($data);
+        }
+  
     }
 }

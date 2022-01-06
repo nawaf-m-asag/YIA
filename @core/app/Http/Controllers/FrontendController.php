@@ -1318,6 +1318,8 @@ class FrontendController extends Controller
         return $pdf->download('package-invoice.pdf');
     }
 
+
+
     public function testimonials()
     {
         $default_lang = Language::where('default', 1)->first();

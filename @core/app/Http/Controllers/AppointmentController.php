@@ -33,7 +33,10 @@ class AppointmentController extends Controller
 
     public function appointment_all()
     {
-        $all_appointment = Appointment::with('lang')->get();
+        $all_appointment = DB::table('users as u')   
+        ->Join('orders as o','o.user_id','=','u.id')
+        ->where('o.status','complete')
+        ->get();
         return view($this->base_view_path . 'appointment-all')->with(['all_appointment' => $all_appointment]);
     }
 

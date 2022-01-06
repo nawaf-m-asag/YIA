@@ -1,4 +1,10 @@
 @extends('backend.admin-master')
+@section('style')
+    <link rel="stylesheet" href="{{asset('assets/backend/css/bootstrap-tagsinput.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/backend/css/summernote-bs4.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/backend/css/dropzone.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/backend/css/media-uploader.css')}}">
+@endsection
 @section('site-title')
     {{__('New Price Plan')}}
 @endsection
@@ -80,6 +86,7 @@
                                     <option value="draft">{{__('Draft')}}</option>
                                 </select>
                             </div>
+                            <x-media-upload :id="''" :name="'image'" :dimentions="'1920x1280'" :title="__('Image')"/>
                             <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">{{__('Add New Price Plan')}}</button>
                         </form>
                     </div>
@@ -151,4 +158,7 @@
 
         });
     </script>
+      @include('backend.partials.media-upload.media-upload-markup')
+    <script src="{{asset('assets/backend/js/dropzone.js')}}"></script>
+       @include('backend.partials.media-upload.media-js')
 @endsection
