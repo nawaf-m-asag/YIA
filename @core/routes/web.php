@@ -295,7 +295,7 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::post('/donation-user/generate-invoice', 'FrontendController@generate_donation_invoice')->name('frontend.donation.invoice.generate');
     Route::post('/event-user/generate-invoice', 'FrontendController@generate_event_invoice')->name('frontend.event.invoice.generate');
     Route::post('/package-user/generate-invoice', 'FrontendController@generate_package_invoice')->name('frontend.package.invoice.generate');
-
+    Route::post('/course-transcript/generate-transcript', 'UserDashboardController@generate_transcript')->name('frontend.course.transcript.generate');
 
     //static page
     $about_page_slug = get_static_option('about_page_slug') ?? 'about';
@@ -400,6 +400,8 @@ Route::prefix('user-home')->middleware(['userEmailVerify', 'setlang:frontend', '
     Route::get('/donations', 'UserDashboardController@donations')->name('user.home.donations');
     Route::get('/appointment-booking', 'UserDashboardController@appointment_booking')->name('user.home.appointment.booking');
     Route::get('/course-enroll', 'UserDashboardController@course_enroll')->name('user.home.course.enroll');
+    Route::get('/course-transcript', 'UserDashboardController@course_transcript')->name('user.home.course.transcript');
+    Route::post('/course-transcript', 'UserDashboardController@course_transcript')->name('user.home.course.transcript.post');
     Route::get('/support-tickets', 'UserDashboardController@support_tickets')->name('user.home.support.tickets');
 
     Route::get('/change-password', 'UserDashboardController@change_password')->name('user.home.change.password');
