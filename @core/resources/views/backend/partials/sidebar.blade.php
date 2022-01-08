@@ -56,7 +56,9 @@
                             <li class="{{active_menu('admin-home/frontend/user/new')}}"><a
                                     href="{{route('admin.frontend.new.user')}}">{{__('Add New User')}}</a></li>
                             <li class="{{active_menu('admin-home/frontend/user/certificate')}}"><a
-                                        href="{{route('admin.frontend.certificate.user')}}">{{__('Edit Users Certificate')}}</a></li>        
+                                        href="{{route('admin.frontend.certificate.user')}}">{{__('Edit Users Certificate')}}</a></li>   
+                            <li class="{{active_menu('admin-home/frontend/user/self-reports')}}"><a
+                                            href="{{route('admin.frontend.self_reports')}}">{{__('Edit Users self reports')}}</a></li>        
                         </ul>
                     </li>
                     @endif
