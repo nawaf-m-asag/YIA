@@ -4,6 +4,11 @@
         body{
             text-align: right
         }
+        .members-single-item img{
+            height: 300px;
+            height: 250px;
+            object-fit: cover;
+        }
     </style>
 @endsection
 @section('site-title')
