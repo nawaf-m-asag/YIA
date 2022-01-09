@@ -22,6 +22,7 @@ use App\Products;
 use App\SupportTicket;
 use App\SupportTicketMessage;
 use App\User;
+use App\SelfReports;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
@@ -528,8 +529,50 @@ class UserDashboardController extends Controller
             'input_end'=>$input_end,
             ]);
     }
-
-
+    public function self_reports(Request $request){
+        $input_start=(isset($request->input_start)&&!empty($request->input_start))?$request->input_start:'';
+        $input_end=(isset($request->input_end)&&!empty($request->input_end))?$request->input_end:'';
+        $all_self_reports = SelfReports::where('user_id',$this->logged_user_details()->id);
+        if(!empty($input_start)&&!empty($input_end)){
+            $all_self_reports->whereBetween('submitted_on',[$request->input_start,$request->input_end]);
+        }
+        $all_self_reports=$all_self_reports->get();
+        return view(self::BASE_PATH.'self_reports')->with(
+            [ 'all_self_reports' => $all_self_reports,
+            'input_start'=>$input_start,
+            'input_end'=>$input_end,
+            ]);
+    }
+    public function self_reports_stor(Request $request){
+        $this->validate($request,[
+            'course_name' => 'required|string|max:191',
+            'credit' => 'required|string|max:191',
+            'credit_type' => 'required|string|max:191',
+            'file' => 'required',
+            'submitted_on'=>'required'
+        ]);
+        if ($request->hasFile('file')) {
+            $file_extenstion = $request->file->getClientOriginalExtension();
+            if (in_array($file_extenstion,['doc','docx','jpg','jpeg','png','mp3','mp4','pdf','txt','zip'])) {
+                $file_name_with_ext = $request->file->getClientOriginalName();
+                $file_name = pathinfo($file_name_with_ext, PATHINFO_FILENAME);
+                $file_name = strtolower(Str::slug($file_name));
+                $file_db = $file_name . time() . '.' . $file_extenstion;
+                $request->file->move('assets/uploads/certificate-user/', $file_db);
+               
+            }
+        }   
+        SelfReports::create([
+            'course_name' => $request->course_name,
+            'credit' => $request->credit,
+            'credit_type' =>  $request->credit_type,
+            'status' =>0,
+            'file' => isset($file_db)?$file_db:null,
+            'submitted_on' => $request->submitted_on,
+            'user_id' => $this->logged_user_details()->id
+        ]);
+        return redirect()->back()->with(['msg' => __('New Self Reports Added Success'),'type' => 'success']);
+    }
     public function course_order_cancel(Request $request){
         $order_details = CourseEnroll::where(['id' => $request->order_id,'user_id' => $this->logged_user_details()->id])->first();
         CourseEnroll::where('id',$order_details->id)->update([
@@ -801,8 +844,6 @@ class UserDashboardController extends Controller
         if($download==true)   {
 
             $pdf = PDF::loadView('invoice.transcript',$data); 
-            $pdf->set_option('isHtml5ParserEnabled', true);
-            $pdf->loadHtml($str, 'UTF-8');
             return $pdf->download('transcript.pdf');
         }
         else{
@@ -810,4 +851,44 @@ class UserDashboardController extends Controller
         }
   
     }
+    public function generate_self_reports(Request $request)
+    {
+        $start_date=(isset($request->start_date)&&!empty($request->start_date))?$request->start_date:'';
+        $end_date=(isset($request->end_date)&&!empty($request->end_date))?$request->end_date:'';
+        $all_self_reports = SelfReports::where('user_id',$this->logged_user_details()->id)->where('status',1);
+        if(!empty($start_date)&&!empty($end_date)){
+            $all_self_reports->whereBetween('submitted_on',[$start_date,$end_date]);
+        }
+
+        $all_self_reports=$all_self_reports->get();
+        if (empty($all_self_reports)) {
+           
+            return redirect_404_page();
+        }
+
+        $print=false;
+        $download=false;
+        if(isset($request->print)){
+            $print=true;
+        }else{
+            $download=true;
+        }
+        $data=['all_self_reports' => $all_self_reports,
+        'user_name' => $this->logged_user_details()->name,
+        'start_date' => $start_date,
+        'end_date' => $end_date,
+        'print'=>$print
+        ];
+        
+        if($download==true)   {
+
+            $pdf = PDF::loadView('invoice.self_reports',$data); 
+            return $pdf->download('self_reports.pdf');
+        }
+        else{
+            return view('invoice.self_reports')->with($data);
+        }
+  
+    }
+    
 }
