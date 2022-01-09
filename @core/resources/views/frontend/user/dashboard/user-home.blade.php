@@ -216,7 +216,7 @@ color:#d62222;
           <div class="col-lg-4">
             <div class="card transcript">
               <h4 class="p-1">شهدات خارجية</h4>
-              <a href=""> عــرض الكــل <i class="fas fa-angle-left"></i></a>
+              <a href="{{route('user.home.self_reports')}}"> عــرض الكــل <i class="fas fa-angle-left"></i></a>
             </div>
           </div>
           <div class="col-lg-4">

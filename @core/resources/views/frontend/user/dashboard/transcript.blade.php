@@ -47,6 +47,8 @@
             display: inline;
         }
         .search button{
+            margin-right: 10px;
+            float: right;
             height: 40px;
             background:var(--main-color-one);
         }
@@ -68,7 +70,7 @@
             <div class="container-table100">
                 <div class="wrap-table100">
                     <div class="row">
-                    <div class="col-6 m-3 search">
+                    <div class="col-9 m-3 search">
                         <form  action="{{route('user.home.course.transcript.post')}}"  method="post">
                             @csrf
                             <div class="div-input">
