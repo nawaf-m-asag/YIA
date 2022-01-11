@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Admin;
@@ -59,6 +58,7 @@ use App\VideoGallery;
 use App\Works;
 use App\Discounts;
 use App\WorksCategory;
+use App\Branches;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
@@ -652,9 +652,10 @@ class FrontendController extends Controller
     public function plan_order($id)
     {
         $order_details = PricePlan::findOrFail($id);
-
+        $branches = Branches::All();
         return view('frontend.pages.package.order-page')->with([
-            'order_details' => $order_details
+            'order_details' => $order_details,
+            'branches'=> $branches
         ]);
     }
 

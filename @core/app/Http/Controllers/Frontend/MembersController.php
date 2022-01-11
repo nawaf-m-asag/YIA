@@ -19,6 +19,8 @@ class MembersController extends Controller
         $sort = $request->sort ?? '';
         $cat_id = $request->cat ?? '';
         $search_term = $request->s ?? '';
+        $date= date('Y-m-d',strtotime('-1 years')) . PHP_EOL;
+
         $users_query =DB::table('users as u') 
         ->select('u.id','u.name','u.image','o.package_name')  
         ->leftJoin('orders as o',
@@ -27,7 +29,8 @@ class MembersController extends Controller
             $join->on('o.user_id','=','u.id')
             ->on('o.id','=',DB::raw("(select max(orders.id)  from orders WHERE (orders.user_id = u.id &&orders.status='complete'))"));}
         )
-        ->where('o.status','complete');
+
+        ->where('o.status','complete')->where('o.created_at','>',$date);
         $all_price_plan = PricePlan::where(['lang' => $lang])->get();
         $all_language = Language::all();
         $sort_by = 'u.id';
@@ -58,7 +61,6 @@ class MembersController extends Controller
         $all_users = $users_query->paginate(5);
 
         $category_list = user::get();
-       // dd($all_users);
         return view($this->base_path.'members-all')->with([
             'all_users'=>$all_users,
             'all_price_plan'=>$all_price_plan,

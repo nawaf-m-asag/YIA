@@ -20,6 +20,7 @@ use App\Newsletter;
 use App\Order;
 use App\PricePlan;
 use App\Quote;
+use App\Branches;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -209,6 +210,9 @@ class FrontendFormController extends Controller
     public function send_order_message(Request $request)
     {
 
+        if(isset($request->branches)&& $request->branches!=0){
+           $branches= Branches::find($request->branches);
+        }
         $validated_data = $this->get_filtered_data_from_request(get_static_option('order_page_form_fields'),$request);
         $all_attachment = $validated_data['all_attachment'];
         $all_field_serialize_data = $validated_data['field_data'];
@@ -219,11 +223,12 @@ class FrontendFormController extends Controller
             'attachment' => serialize($all_attachment),
             'status' => 'pending',
             'package_name' => $package_detials->title,
-            'package_price' => $package_detials->price,
+            'package_price' => isset($branches)?$package_detials->price+$branches->price:$package_detials->price,
             'package_id' => $package_detials->id,
             'checkout_type' => !empty($request->checkout_type) ? $request->checkout_type : '',
             'user_id' => Auth::guard('web')->check() ? Auth::guard('web')->user()->id : 0,
-        ])->id;
+            'branche_id'=>isset($branches->id)?$branches->id:0,
+        ]);
 
         if (!empty(get_static_option('site_payment_gateway'))) {
             return redirect()->route('frontend.order.confirm', $order_id);
