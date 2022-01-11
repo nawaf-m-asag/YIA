@@ -212,6 +212,12 @@
                             </ul>
                         </li>
                     @endif
+                    @if(check_page_permission_by_string('Branches'))
+                    <li class="main_dropdown {{active_menu('admin-home/branches')}}">
+                        <a href="{{route('admin.branches')}}" aria-expanded="true"><i class="ti-control-forward"></i>
+                            <span>{{__('Branches')}}</span></a>
+                    </li>
+                    @endif
                     @if(check_page_permission_by_string('Faq'))
                     <li class="main_dropdown {{active_menu('admin-home/faq')}}">
                         <a href="{{route('admin.faq')}}" aria-expanded="true"><i class="ti-control-forward"></i>

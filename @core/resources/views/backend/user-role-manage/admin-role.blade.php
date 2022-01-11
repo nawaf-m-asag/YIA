@@ -49,7 +49,8 @@
         "Appointment Manage",
         "Support Tickets",
         "Email Templates",
-        "Discount Logos"
+        "Discount Logos",
+        "Branches"
     );
 @endphp
 

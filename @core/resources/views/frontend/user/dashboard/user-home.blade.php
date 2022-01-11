@@ -45,7 +45,7 @@ color:#d62222;
     
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Profile</a>
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{get_static_option('site_'.$user_select_lang_slug.'_Aboutmes')}}</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Transcript</a>
@@ -77,7 +77,7 @@ color:#d62222;
                                     <Input class="uploadProfileInput" type="file" name="profile_pic" id="newProfilePhoto" style="display: none" />
                                 </form>
                                   <div class="text-uppercase">
-                                   {{ __('Update')}} <br /> {{__('Profile Photo')}}
+                                   {{get_static_option('site_'.$user_select_lang_slug.'_Updates')}} <br /> {{get_static_option('site_'.$user_select_lang_slug.'_ProfilePhoto')}}
                                   </div>
                                 </div>
                               </label>
@@ -86,7 +86,7 @@ color:#d62222;
                     </div>
                     <div class="col-lg-8 p-4" style="text-align: right">
                       <h3>{{$user_details->name}} @if (!empty($package_orders)) /{{$package_orders->package_name}} @endif</h3>
-                      <h4>{{__('AIY number')}}: {{$user_details->id}}</h4>
+                      <h4>{{__('YIA number')}}: {{$user_details->id}}</h4>
                    </div>
                 </div>    
             </div>
@@ -98,36 +98,36 @@ color:#d62222;
           <div class="col-lg-4">
             <div class="card">
               <div class="card-header">
-               {{__('About me')}}
+               {{get_static_option('site_'.$user_select_lang_slug.'_Aboutmes')}}
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <label for="">
-                    {{__('Address')}}
+                    {{get_static_option('site_'.$user_select_lang_slug.'_Addressa')}}
                   </label>
                   <br>
                   {{$user_details->address}}</li>
                 <li class="list-group-item">
                   <label for="">
-                    {{__('Phone')}}
+                    {{get_static_option('site_'.$user_select_lang_slug.'_Phones')}}
                   </label>
                   <br>
                   {{$user_details->phone}}</li>
                 <li class="list-group-item">
                   <label for="">
-                    {{__('Email')}}
+                    {{get_static_option('site_'.$user_select_lang_slug.'_emailsa')}}
                   </label>
                   <br>
                   {{$user_details->email}}</li>
                 <li class="list-group-item">
                   <label for="">
-                    {{__('Country')}}
+                    {{get_static_option('site_'.$user_select_lang_slug.'_Statesa')}}
                   </label>
                   <br>
-                  {{$user_details->country}}</li>
+                  {{$user_details->state}}</li>
                 <li class="list-group-item">
                   <label for="">
-                    {{__('City')}}
+                    {{get_static_option('site_'.$user_select_lang_slug.'_citys')}}
                   </label>
                   <br>
                   {{$user_details->city}}</li>
@@ -137,23 +137,23 @@ color:#d62222;
           <div class="col-lg-4">
             <div class="card">
               <div class="card-header">
-              {{__('education')}}
+              {{get_static_option('site_'.$user_select_lang_slug.'_education')}}
               </div>
               <ul class="list-group list-group-flush">
                 @if ($user_details->certificate_status==1)
                     
                 <li class="list-group-item">
-                  <label for=""> {{__('University Name')}}</label>
+                  <label for=""> {{{get_static_option('site_'.$user_select_lang_slug.'_UniversityName')}}}</label>
                   <br>
                   {{$user_details->university_name}}</li>
                 <li class="list-group-item">
-                <label for="">{{__('Specialization')}}</label>
+                <label for="">{{get_static_option('site_'.$user_select_lang_slug.'_Specialization')}}</label>
                 <br>
                   {{$user_details->specialization}}
                 </li>
                 <li class="list-group-item">
                   <label for="">
-                    {{__('Graduation Date')}}
+                    {{get_static_option('site_'.$user_select_lang_slug.'_GraduationDate')}}
                   </label>
                   <br>
                   {{$user_details->graduation_date}}</li>
@@ -165,20 +165,20 @@ color:#d62222;
           <div class="col-lg-4">
             <div class="card">
               <div class="card-header">
-              {{__('My member info')}}
+              {{get_static_option('site_'.$user_select_lang_slug.'_membershp')}}
               </div>
               @if (!empty($package_orders))
               <ul class="list-group list-group-flush">
                 
                 <li class="list-group-item">
                   <label for="">
-                    {{__('member name')}}
+                    {{get_static_option('site_'.$user_select_lang_slug.'_membertype')}}
                   </label>
                   <br>
                   {{$package_orders->package_name}}</li>
                   <li class="list-group-item">
                     <label for="">
-                      {{__('Expiry date')}}
+                      {{get_static_option('site_'.$user_select_lang_slug.'_Expirydatemember')}}
                     </label>
                     <br>
                     @php
@@ -186,6 +186,10 @@ color:#d62222;
                           $t = strtotime($dateString);
                           $t2 = strtotime('+1 years', $t);
                           echo date('Y-m-d', $t2) . PHP_EOL; 
+                               $date= date('Y-m-d',strtotime('-1 years')) . PHP_EOL;
+                          if($package_orders->created_at<$date){
+                            echo '<span id="expiry" class="label btn-danger p-1">انتهت العضوية</span>';
+                          }
                     @endphp 
                   </li>
                  
@@ -194,10 +198,10 @@ color:#d62222;
               <br>
               @if (empty($package_orders))
               <a href="{{route('frontend.price.plan')}}" type="button" class="btn join btn-danger">
-                {{__('Join')}} 
+                {{get_static_option('site_'.$user_select_lang_slug.'_joinuss')}} 
                 @else
                 <a href="{{route('frontend.plan.order',$package_orders->package_id)}}" type="button" class="btn join btn-danger">
-                {{__('renew')}} 
+                {{get_static_option('site_'.$user_select_lang_slug.'_renews')}} 
                 @endif
               </a>
         
@@ -210,19 +214,19 @@ color:#d62222;
           <div class="col-lg-4">
             <div class="card transcript">
               <h4 class="p-1">transcript</h4>
-              <a href="{{route('user.home.course.transcript')}}"> عــرض الكــل <i class="fas fa-angle-left"></i></a>
+              <a href="{{route('user.home.course.transcript')}}">{{get_static_option('site_'.$user_select_lang_slug.'_viewall')}}<i class="fas fa-angle-left"></i></a>
             </div>
           </div>
           <div class="col-lg-4">
             <div class="card transcript">
-              <h4 class="p-1">شهدات خارجية</h4>
-              <a href="{{route('user.home.self_reports')}}"> عــرض الكــل <i class="fas fa-angle-left"></i></a>
+              <h4 class="p-1">{{get_static_option('site_'.$user_select_lang_slug.'_ExternalCertificates')}}</h4>
+              <a href="{{route('user.home.self_reports')}}">{{get_static_option('site_'.$user_select_lang_slug.'_viewall')}}<i class="fas fa-angle-left"></i></a>
             </div>
           </div>
           <div class="col-lg-4">
             <div class="card transcript">
-              <h4 class="p-1">تصنيفات الكرسات</h4>
-              <a href="{{route('frontend.course')}}"> عــرض تصنفات الكرسات <i class="fas fa-angle-left"></i></a>
+              <h4 class="p-1">{{get_static_option('courses_page_'.$user_select_lang_slug.'_name')}}</h4>
+              <a href="{{route('frontend.course')}}">{{get_static_option('site_'.$user_select_lang_slug.'_viewall')}}<i class="fas fa-angle-left"></i></a>
             </div>
           </div>
         </div>

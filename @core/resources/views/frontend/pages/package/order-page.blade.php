@@ -1,6 +1,6 @@
 @extends('frontend.frontend-page-master')
 @section('page-title')
-    {{__('Order For')}} {{' : '.$order_details->title}}
+    {{$order_details->title}}
 @endsection
 @section('content')
     <section class="order-service-page-content-area padding-100">
@@ -27,7 +27,7 @@
                                    <div class="checkout-type margin-bottom-30  @if(auth()->check()) d-none  @endif">
                                        <div class="custom-control custom-switch">
                                            <input type="checkbox" class="custom-control-input" id="guest_logout" name="checkout_type">
-                                           <label class="custom-control-label" for="guest_logout">{{__('Guest Order')}}</label>
+                                           <label class="custom-control-label" for="guest_logout">{{get_static_option('site_'.$user_select_lang_slug.'_Guests')}}</label>
                                        </div>
                                    </div>
                                    @endif
@@ -37,36 +37,36 @@
                                                @csrf
                                                <div class="error-wrap"></div>
                                                <div class="form-group">
-                                                   <input type="text" name="username" class="form-control" placeholder="{{__('Username')}}">
+                                                   <input type="text" name="username" class="form-control" placeholder="{{get_static_option('site_'.$user_select_lang_slug.'_usernames')}}">
                                                </div>
                                                <div class="form-group">
-                                                   <input type="password" name="password" class="form-control" placeholder="{{__('Password')}}">
+                                                   <input type="password" name="password" class="form-control" placeholder="{{get_static_option('site_'.$user_select_lang_slug.'_loginspass')}}">
                                                </div>
                                                <div class="form-group btn-wrapper">
-                                                   <button type="submit" id="login_btn" class="submit-btn">{{__('Login')}}</button>
+                                                   <button type="submit" id="login_btn" class="submit-btn">{{get_static_option('site_'.$user_select_lang_slug.'_logins')}}</button>
                                                </div>
                                                <div class="row mb-4 rmber-area">
                                                    <div class="col-6">
                                                        <div class="custom-control custom-checkbox mr-sm-2">
                                                            <input type="checkbox" name="remember" class="custom-control-input" id="remember">
-                                                           <label class="custom-control-label" for="remember">{{__('Remember Me')}}</label>
+                                                           <label class="custom-control-label" for="remember">{{get_static_option('site_'.$user_select_lang_slug.'_loginsre')}}</label>
                                                        </div>
                                                    </div>
                                                    <div class="col-6 text-right">
-                                                       <a class="d-block" href="{{route('user.register')}}">{{__('Create new account?')}}</a>
-                                                       <a href="{{route('user.forget.password')}}">{{__('Forgot Password?')}}</a>
+                                                       <a class="d-block" href="{{route('user.register')}}">{{get_static_option('site_'.$user_select_lang_slug.'_loginsregister')}}</a>
+                                                       <a href="{{route('user.forget.password')}}">{{get_static_option('site_'.$user_select_lang_slug.'_Forgetpass')}}</a>
                                                    </div>
                                                </div>
                                            </form>
                                        </div>
                                    @else
                                        <div class="alert alert-success">
-                                            {{__('Your Are Logged In As ')}} {{ auth()->user()->name}}
+                                            {{get_static_option('site_'.$user_select_lang_slug.'_logunas')}} {{ auth()->user()->name}}
                                        </div>
                                    @endif
                                    @if(!auth()->check())
                                    <div class="next-step">
-                                       <button class="next-step-btn btn-boxed d-none" type="button">{{__('Next Step')}}</button>
+                                       <button class="next-step-btn btn-boxed d-none" type="button">{{get_static_option('site_'.$user_select_lang_slug.'_NextStep')}}</button>
                                    </div>
                                    @endif
                                </div>
@@ -79,10 +79,26 @@
                                        <div class="row">
                                            <div class="col-lg-12">
                                                {!! render_form_field_for_frontend(get_static_option('order_page_form_fields')) !!}
+                                                 @if (!empty($branches))
+                                               <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="branches"  value="0" checked>
+                                                 الفرع الرئيسي
+                                                </label>
+                                            </div>
+                                               @endif
+                                               @foreach ($branches as $item)
+                                               <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="branches"  value="{{$item->id}}">
+                                                   {{ $item->name}}
+                                                </label>
+                                            </div>
+                                               @endforeach
                                                 {!! render_payment_gateway_for_form() !!}
                                            </div>
                                            <div class="col-lg-12">
-                                               <button class="submit-btn width-200" type="submit">{{__('Order Package')}}</button>
+                                               <button class="submit-btn width-200" type="submit">{{get_static_option('site_'.$user_select_lang_slug.'_applays')}}</button>
                                            </div>
                                        </div>
                                    </form>
@@ -94,14 +110,7 @@
                 <div class="col-lg-4">
                     <div class="right-content-area">
                         <div class="single-price-plan-01 style-02 active">
-                            @php
-                            $plan_img = get_attachment_image_by_id($order_details->image,null,true);
-                            @endphp
-                             @if (!empty($plan_img))
-                             <img class="card-img-top" src="{{$plan_img['img_url']}}" alt="Card image cap">
-                             @endif
                             <div class="price-header">
-                              
                                 <div class="name-box">
                                     <h4 class="name">{{$order_details->title}}</h4>
                                 </div>

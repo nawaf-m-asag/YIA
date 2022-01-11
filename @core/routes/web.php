@@ -296,7 +296,7 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::post('/event-user/generate-invoice', 'FrontendController@generate_event_invoice')->name('frontend.event.invoice.generate');
     Route::post('/package-user/generate-invoice', 'FrontendController@generate_package_invoice')->name('frontend.package.invoice.generate');
     Route::post('/course-transcript/generate-transcript', 'UserDashboardController@generate_transcript')->name('frontend.course.transcript.generate');
-
+    Route::post('/self-reports/generate', 'UserDashboardController@generate_self_reports')->name('frontend.course.self_reports.generate');
     //static page
     $about_page_slug = get_static_option('about_page_slug') ?? 'about';
     $work_page_slug = get_static_option('work_page_slug') ?? 'work';
@@ -402,6 +402,11 @@ Route::prefix('user-home')->middleware(['userEmailVerify', 'setlang:frontend', '
     Route::get('/course-enroll', 'UserDashboardController@course_enroll')->name('user.home.course.enroll');
     Route::get('/course-transcript', 'UserDashboardController@course_transcript')->name('user.home.course.transcript');
     Route::post('/course-transcript', 'UserDashboardController@course_transcript')->name('user.home.course.transcript.post');
+
+    Route::get('/self-reports', 'UserDashboardController@self_reports')->name('user.home.self_reports');
+    Route::post('/self-reports', 'UserDashboardController@self_reports')->name('user.home.self_reports.post');
+    Route::post('/add/self-reports/', 'UserDashboardController@self_reports_stor')->name('user.home.self_reports.stor');
+    
     Route::get('/support-tickets', 'UserDashboardController@support_tickets')->name('user.home.support.tickets');
 
     Route::get('/change-password', 'UserDashboardController@change_password')->name('user.home.change.password');
@@ -2041,6 +2046,17 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
     });
 
     /*==============================================
+       Branches ROUTES
+    ==============================================*/
+    Route::prefix('branches')->middleware(['adminPermissionCheck:Branches'])->group(function () {
+        Route::get('/', 'BrancheController@index')->name('admin.branches');
+        Route::post('/', 'BrancheController@store');
+        Route::post('/update', 'BrancheController@update')->name('admin.branches.update');
+        Route::post('/delete/{id}', 'BrancheController@delete')->name('admin.branches.delete');
+        Route::post('/bulk-action', 'BrancheController@bulk_action')->name('admin.branches.bulk.action');
+    });
+
+    /*==============================================
         TESTIMONIAL ROUTES
      ==============================================*/
     Route::prefix('testimonial')->middleware(['adminPermissionCheck:Testimonial'])->group(function () {
@@ -2270,6 +2286,9 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
     Route::prefix('frontend/user')->middleware(['adminPermissionCheck:Users Manage'])->group(function () {
         Route::get('/new', 'FrontendUserManageController@new_user')->name('admin.frontend.new.user');
         Route::get('/certificate', 'FrontendUserManageController@certificate_user')->name('admin.frontend.certificate.user');
+        Route::get('/self-reports', 'SelfReportsController@index')->name('admin.frontend.self_reports');
+        Route::post('/self-reports/bulk-action', 'SelfReportsController@bulk_action')->name('admin.all.frontend.self-reports.bulk.action');
+        Route::post('/self-reports/update-status', 'SelfReportsController@reports_status_update')->name('admin.frontend.self-reports.status.update');
         Route::get('/user-certificate-download/{id}', 'FrontendUserManageController@certificate_download')->name('admin.frontend.certificate.download');
         Route::post('/new', 'FrontendUserManageController@new_user_add');
         Route::post('/update', 'FrontendUserManageController@user_update')->name('admin.frontend.user.update');
