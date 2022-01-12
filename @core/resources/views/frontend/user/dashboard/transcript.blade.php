@@ -52,6 +52,15 @@
             height: 40px;
             background:var(--main-color-one);
         }
+        .points{
+            margin-right: 10px;
+            float: right;
+            height: 40px;
+            background:var(--main-color-one);
+            background: #dd0e0e;
+            padding: 10px;
+            color: #fff;
+        }
     </style>
 @endsection
 @section('section')
@@ -70,7 +79,7 @@
             <div class="container-table100">
                 <div class="wrap-table100">
                     <div class="row">
-                    <div class="col-9 m-3 search">
+                    <div class="col-7 m-3 search">
                         <form  action="{{route('user.home.course.transcript.post')}}"  method="post">
                             @csrf
                             <div class="div-input">
@@ -83,6 +92,13 @@
                             </div>
                             <button class="btn btn-xs btn-small"><i class="fas fa-search"></i></button>
                         </form>    
+                    </div>
+                    <div class="col-4 m-3 ">
+                        <div class="points">
+                            عدد النقاط
+                            {{$points}}
+                        </div>
+
                     </div>
 
                     </div>
@@ -108,6 +124,7 @@
                             </tbody>
                         </table>
                     </div>
+            
                 </div>
             </div>
         </div>

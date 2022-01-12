@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     protected $table = 'courses';
-    protected $fillable = ['image','status','duration','duration_type','max_student','enrolled_student','featured','external_url','price','sale_price','enroll_required','og_meta_image','instructor_id','curriculum_id','categories_id'];
+    protected $fillable = ['image','status','duration','duration_type','max_student','enrolled_student','featured','external_url','price','','sale_price','points','enroll_required','og_meta_image','instructor_id','curriculum_id','categories_id'];
 
 
     public function setCurriculumIdAttribute($value)

@@ -52,6 +52,7 @@ class CoursesController extends Controller
         $this->validate($request, [
             'title' => 'check_array:1',
             'price' => 'required|numeric',
+            'points' => 'required|numeric',
             'max_student' => 'nullable|numeric',
             'duration' => 'required|string',
             'duration_type' => 'required|string',
@@ -81,6 +82,7 @@ class CoursesController extends Controller
             'external_url' => $request->external_url,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
+            'points' => $request->points,
             'enroll_required' => $request->enroll_required,
             'og_meta_image' => $request->og_meta_image,
             'instructor_id' => $request->instructor_id,
@@ -262,6 +264,7 @@ class CoursesController extends Controller
         $this->validate($request, [
             'title' => 'check_array:1',
             'price' => 'required|numeric',
+            'points' => 'required|numeric',
             'max_student' => 'nullable|numeric',
             'duration' => 'required|string',
             'duration_type' => 'required|string',
@@ -288,6 +291,7 @@ class CoursesController extends Controller
             'external_url' => $request->external_url,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
+            'points' => $request->points,
             'enroll_required' => $request->enroll_required,
             'og_meta_image' => $request->og_meta_image,
             'instructor_id' => $request->instructor_id,

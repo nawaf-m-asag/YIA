@@ -45,6 +45,7 @@
                                 <th>{{__('Image')}}</th>
                                 <th>{{__('Instructor')}}</th>
                                 <th>{{__('Category')}}</th>
+                                <th>النقاط</th>
                                 <th>{{__('Status')}}</th>
                                 <th>{{__('Action')}}</th>
                                 </thead>
@@ -77,6 +78,7 @@
                                         </td>
                                         <td>{{optional($data->instructor)->name}}</td>
                                         <td>{{optional(optional($data->category)->lang)->title ?? __('Uncategorized')}}</td>
+                                        <th>{{$data->points}}</th>
                                         <td>
                                            <x-status-span :status="$data->status"/>
                                         </td>

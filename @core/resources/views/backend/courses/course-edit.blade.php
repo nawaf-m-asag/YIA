@@ -1,6 +1,6 @@
 @extends('backend.admin-master')
 @section('site-title')
-    {{__('Edit Course')}}
+    تحرير
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{asset('assets/backend/css/summernote-bs4.css')}}">
@@ -21,8 +21,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="header-wrap d-flex justify-content-between margin-bottom-30">
-                            <h4 class="header-title">{{__('Edit Course')}}</h4>
-                            <a href="{{route('admin.courses.all')}}" class="btn btn-info">{{__('All Courses')}}</a>
+                            <h4 class="header-title">تحرير</h4>
+                            <a href="{{route('admin.courses.all')}}" class="btn btn-info">الكل</a>
                         </div>
                         <form action="{{route('admin.courses.update')}}" method="post" enctype="multipart/form-data">
                             @csrf
@@ -40,76 +40,80 @@
                                     @php $currentLang = optional(optional($course->lang_query)->where(['lang'=> $lang->slug,'course_id' => $course->id]))->first();@endphp
                                     <div class="tab-pane fade @if($lang->slug == $default_lang) show active @endif" id="slider_tab_{{$lang->slug}}" role="tabpanel" >
                                         <div class="form-group">
-                                            <label for="title">{{__('Title')}}</label>
+                                            <label for="title">العنوان</label>
                                             <input type="text" class="form-control title-field" name="title[{{$lang->slug}}]" value="{{$currentLang->title ?? ''}}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="slug">{{__('Slug')}}</label>
+                                            <label for="slug">العنوان للمتصفح</label>
                                             <input type="text" class="form-control slug-field"  name="slug[{{$lang->slug}}]" value="{{$currentLang->slug ?? ''}}">
                                         </div>
                                         <div class="form-group">
-                                            <label>{{__('Description')}}</label>
+                                            <label>الوصف</label>
                                             <input type="hidden" name="description[{{$lang->slug}}]" value="{{$currentLang->description ?? ''}}">
                                             <div class="summernote" data-content='{{$currentLang->description ?? ''}}'></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="meta_title">{{__('Meta title')}}</label>
+                                            <label for="meta_title">العنوان سيو</label>
                                             <input type="text" class="form-control" name="meta_title[{{$lang->slug}}]" value="{{$currentLang->meta_title ?? ''}}">
                                         </div>
                                         <div class="form-group">
-                                            <label for="meta_description">{{__('Meta Description')}}</label>
-                                            <textarea  class="form-control max-height-120" name="meta_description[{{$lang->slug}}]"cols="30" rows="10" placeholder="{{__('Meta Description')}}">{{$currentLang->meta_description ?? ''}}</textarea>
+                                            <label for="meta_description">الوصف سيو</label>
+                                            <textarea  class="form-control max-height-120" name="meta_description[{{$lang->slug}}]"cols="30" rows="10" placeholder="الوصف سيو">{{$currentLang->meta_description ?? ''}}</textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="meta_tags">{{__('Meta Tags')}}</label>
+                                            <label for="meta_tags">السيو</label>
                                             <input type="text" name="meta_tags[{{$lang->slug}}]"  class="form-control" data-role="tagsinput" value="{{$currentLang->meta_tags ?? ''}}" >
                                         </div>
                                         <div class="form-group">
-                                            <label for="og_meta_title">{{__('Og Meta title')}}</label>
-                                            <input type="text" class="form-control" name="og_meta_title[{{$lang->slug}}]" placeholder="{{__('Og Meta title')}}" value="{{$currentLang->og_meta_title ?? ''}}">
+                                            <label for="og_meta_title">{{__('Og Meta عنوان')}}</label>
+                                            <input type="text" class="form-control" name="og_meta_title[{{$lang->slug}}]" placeholder="{{__('Og Meta عنوان')}}" value="{{$currentLang->og_meta_title ?? ''}}">
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
-                                <label for="max_student">{{__('Maximum Student')}}</label>
+                                <label for="max_student">الحد الاقصى لعدد الطلاب</label>
                                 <input type="number" class="form-control" name="max_student" value="{{$course->max_student}}">
                             </div>
                             <div class="form-group">
-                                <label for="price">{{__('Price')}}</label>
+                                <label for="price">السعر</label>
                                 <input type="number" class="form-control" name="price" value="{{$course->price}}">
-                                <span class="info-text">{{__('enter 0 to make it free')}}</span>
+                                <span class="info-text">أدخل 0 لجعلها مجانية</span>
                             </div>
                             <div class="form-group">
-                                <label for="sale_price">{{__('Sale Price')}}</label>
+                                <label for="sale_price">سعر البيع</label>
                                 <input type="number" class="form-control" name="sale_price" value="{{$course->sale_price}}">
                             </div>
-                            <div class="form-group">
-                                <label for="external_url">{{__('External URL')}}</label>
-                                <input type="text" class="form-control" name="external_url" value="{{$course->external_url}}">
-                                <span class="info-text">{{__('it will goes to your enter url when anyone click into enroll button')}}</span>
+                                 <div class="form-group">
+                                <label for="points">النقاط</label>
+                                <input type="number" class="form-control" name="points" value="{{$course->points}}">
                             </div>
                             <div class="form-group">
-                                <label for="duration">{{__('Duration')}}</label>
+                                <label for="external_url">رابط خارجي</label>
+                                <input type="text" class="form-control" name="external_url" value="{{$course->external_url}}">
+                                <span class="info-text">سينتقل إلى الرابط الخاص بك عندما ينقر أي شخص على زر التسجيل</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration">المدة</label>
                                 <input type="text" class="form-control" name="duration" value="{{$course->duration}}">
                             </div>
                             <div class="form-group">
-                                <label for="duration_type">{{__('Duration Type')}}</label>
+                                <label for="duration_type">نوع المدة</label>
                                 <select name="duration_type" class="form-control">
-                                    <option @if($course->duration_type === 'min') selected @endif value="min">{{__('Minute')}}</option>
-                                    <option @if($course->duration_type === 'hr') selected @endif value="hr">{{__('Hours')}}</option>
-                                    <option @if($course->duration_type === 'days') selected @endif value="days">{{__('Days')}}</option>
+                                    <option @if($course->duration_type === 'min') selected @endif value="min">دقائق</option>
+                                    <option @if($course->duration_type === 'hr') selected @endif value="hr">ساعات</option>
+                                    <option @if($course->duration_type === 'days') selected @endif value="days">ايام</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="featured"><strong>{{__('Featured')}}</strong></label>
+                                <label for="featured"><strong>مميزة</strong></label>
                                 <label class="switch">
                                     <input type="checkbox" name="featured" @if($course->featured === 'yes') checked @endif>
                                     <span class="slider onff"></span>
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="enroll_required"><strong>{{__('Enroll Required')}}</strong></label>
+                                <label for="enroll_required"><strong>التسجيل مطلوب</strong></label>
                                 <label class="switch">
                                     <input type="checkbox" name="enroll_required" @if($course->enroll_required === 'yes') checked @endif >
                                     <span class="slider onff"></span>
@@ -119,7 +123,7 @@
                             <x-media-upload :name="'og_meta_image'" :title="__('Og Meta Image')" :id="$course->og_meta_image" :dimentions="'1920x1080px'" />
 
                             <div class="form-group">
-                                <label for="categories_id">{{__('Category')}}</label>
+                                <label for="categories_id">التصنيف</label>
                                 <select name="categories_id" class="form-control nice-select wide">
                                     @foreach($all_categories as $cat)
                                         <option value="{{$cat->id}}" @if($course->categories_id == $cat->id) selected @endif>{{optional($cat->lang)->title ?? __('untitled')}}</option>
@@ -127,7 +131,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="instructor_id">{{__('Instructor')}}</label>
+                                <label for="instructor_id">المدرب</label>
                                 <select name="instructor_id" class="form-control nice-select wide">
                                     @foreach($all_instructor as $inst)
                                         <option value="{{$inst->id}}" @if($course->instructor_id == $inst->id) selected @endif>{{$inst->name}}</option>
@@ -135,14 +139,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="status">{{__('Status')}}</label>
+                                <label for="status">الحالة</label>
                                 <select name="status" class="form-control">
-                                    <option @if($course->status === 'draft') selected @endif value="draft">{{__('Draft')}}</option>
-                                    <option @if($course->status === 'publish') selected @endif value="publish">{{__('Publish')}}</option>
+                                    <option @if($course->status === 'draft') selected @endif value="draft">مسودة</option>
+                                    <option @if($course->status === 'publish') selected @endif value="publish">منشور</option>
                                 </select>
                             </div>
                             <div class="iconbox-repeater-wrapper dynamic-repeater">
-                                <label for="additional_info" class="d-block">{{__('Curriculum')}} <span class="d-none"><i class="fas fa-spinner fa-spin"></i></span></label>
+                                <label for="additional_info" class="d-block">المقرر <span class="d-none"><i class="fas fa-spinner fa-spin"></i></span></label>
                             @forelse($all_curriculumn_with_lesson as $curricullumn_id => $curr_info)
                                <div class="curriculmn-outer-wrap">
                                    <div class="curriculmn-repeater-wrap">
@@ -192,7 +196,7 @@
                                    @empty
                                        <div class="all-field-wrap lesson">
                                            <div class="form-group">
-                                               <input type="text" class="form-control" name="course_lesson[{{$curricullumn_id}}][]"  placeholder="{{__('create new lesson')}}">
+                                               <input type="text" class="form-control" name="course_lesson[{{$curricullumn_id}}][]"  placeholder="انشاء درس جديد">
                                            </div>
 
                                            <div class="action-wrap">
@@ -223,10 +227,10 @@
                                                 @foreach($all_languages as $lang)
                                                     <div class="tab-pane fade @if($lang->slug == $default_lang) show active @endif" id="repeater_tab_{{$lang->slug}}" role="tabpanel" >
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" name="curriculum_title[1][{{$lang->slug}}]" placeholder="{{__('Curriculum title')}}">
+                                                            <input type="text" class="form-control" name="curriculum_title[1][{{$lang->slug}}]" placeholder="عنوان المقرر">
                                                         </div>
                                                         <div class="form-group">
-                                                            <textarea  class="form-control max-height-120" name="curriculum_description[1][{{$lang->slug}}]"cols="30" rows="10" placeholder="{{__('Curriculum description')}}"></textarea>
+                                                            <textarea  class="form-control max-height-120" name="curriculum_description[1][{{$lang->slug}}]"cols="30" rows="10" placeholder="وصف المقرر"></textarea>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -234,7 +238,7 @@
                                         </div>
                                         <div class="all-field-wrap lesson">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="course_lesson[1][]"  placeholder="{{__('create new lesson')}}">
+                                                <input type="text" class="form-control" name="course_lesson[1][]"  placeholder="انشاء درس جديد">
                                             </div>
                                             <div class="action-wrap">
                                                 <span class="edit d-none"><a href="#"><i class="ti-pencil"></i></a></span>
@@ -246,7 +250,7 @@
                                 @endforelse
                             </div>
 
-                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">{{__('Save Changes')}}</button>
+                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">حفظ</button>
                         </form>
                     </div>
                 </div>

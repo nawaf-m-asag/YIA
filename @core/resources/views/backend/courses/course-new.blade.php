@@ -1,6 +1,6 @@
 @extends('backend.admin-master')
 @section('site-title')
-    {{__('New Course')}}
+    اضافة جديد
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{asset('assets/backend/css/summernote-bs4.css')}}">
@@ -21,8 +21,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="header-wrap d-flex justify-content-between margin-bottom-30">
-                            <h4 class="header-title">{{__('Add New Course')}}</h4>
-                            <a href="{{route('admin.courses.all')}}" class="btn btn-info">{{__('All Courses')}}</a>
+                            <h4 class="header-title">اضافة جديد</h4>
+                            <a href="{{route('admin.courses.all')}}" class="btn btn-info">الكل</a>
                         </div>
                         <form action="{{route('admin.courses.new')}}" method="post" enctype="multipart/form-data">
                             @csrf
@@ -38,76 +38,80 @@
                                 @foreach($all_languages as $lang)
                                     <div class="tab-pane fade @if($lang->slug == $default_lang) show active @endif" id="slider_tab_{{$lang->slug}}" role="tabpanel" >
                                         <div class="form-group">
-                                            <label for="title">{{__('Title')}}</label>
-                                            <input type="text" class="form-control title-field" name="title[{{$lang->slug}}]" placeholder="{{__('Title')}}">
+                                            <label for="title">العنوان</label>
+                                            <input type="text" class="form-control title-field" name="title[{{$lang->slug}}]" placeholder="ادخل العنوان">
                                         </div>
                                         <div class="form-group">
-                                            <label for="slug">{{__('Slug')}}</label>
-                                            <input type="text" class="form-control slug-field" name="slug[{{$lang->slug}}]" placeholder="{{__('Slug')}}">
+                                            <label for="slug">العنوان للمتصفح</label>
+                                            <input type="text" class="form-control slug-field" name="slug[{{$lang->slug}}]" placeholder="العنوان للمتصفح">
                                         </div>
                                         <div class="form-group">
-                                            <label>{{__('Description')}}</label>
+                                            <label>الوصف</label>
                                             <input type="hidden" name="description[{{$lang->slug}}]" >
                                             <div class="summernote"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="meta_title">{{__('Meta title')}}</label>
-                                            <input type="text" class="form-control" name="meta_title[{{$lang->slug}}]" placeholder="{{__('Meta title')}}">
+                                            <label for="meta_title">العنوان سيو</label>
+                                            <input type="text" class="form-control" name="meta_title[{{$lang->slug}}]" placeholder="العنوان سيو">
                                         </div>
                                         <div class="form-group">
-                                            <label for="meta_description">{{__('Meta Description')}}</label>
-                                            <textarea  class="form-control max-height-120" name="meta_description[{{$lang->slug}}]"cols="30" rows="10" placeholder="{{__('Meta Description')}}"></textarea>
+                                            <label for="meta_description"> الوصف سيو</label>
+                                            <textarea  class="form-control max-height-120" name="meta_description[{{$lang->slug}}]"cols="30" rows="10" placeholder="الوصف سيو"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="meta_tags">{{__('Meta Tags')}}</label>
+                                            <label for="meta_tags">السيو</label>
                                             <input type="text" name="meta_tags[{{$lang->slug}}]"  class="form-control" data-role="tagsinput" >
                                         </div>
                                         <div class="form-group">
-                                            <label for="og_meta_title">{{__('Og Meta title')}}</label>
-                                            <input type="text" class="form-control" name="og_meta_title[{{$lang->slug}}]" placeholder="{{__('Og Meta title')}}">
+                                            <label for="og_meta_title">{{__('Og Meta عنوان')}}</label>
+                                            <input type="text" class="form-control" name="og_meta_title[{{$lang->slug}}]" placeholder="{{__('Og Meta عنوان')}}">
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                             <div class="form-group">
-                                <label for="max_student">{{__('Maximum Student')}}</label>
+                                <label for="max_student">الحد الأقصى لعدد الطلاب</label>
                                 <input type="number" class="form-control" name="max_student" >
                             </div>
                             <div class="form-group">
-                                <label for="price">{{__('Price')}}</label>
+                                <label for="price">السعر</label>
                                 <input type="number" class="form-control" name="price" >
-                                <span class="info-text">{{__('enter 0 to make it free')}}</span>
+                                <span class="info-text">أدخل 0 لجعلها مجانية</span>
                             </div>
                             <div class="form-group">
-                                <label for="sale_price">{{__('Sale Price')}}</label>
+                                <label for="sale_price">سعر البيع</label>
                                 <input type="number" class="form-control" name="sale_price" >
                             </div>
                             <div class="form-group">
-                                <label for="external_url">{{__('External URL')}}</label>
-                                <input type="text" class="form-control" name="external_url" >
-                                <span class="info-text">{{__('it will goes to your enter url when anyone click into enroll button')}}</span>
+                                <label for="points">النقاط</label>
+                                <input type="number" class="form-control" name="points" >
                             </div>
                             <div class="form-group">
-                                <label for="duration">{{__('Duration')}}</label>
+                                <label for="external_url">رابط خارجي</label>
+                                <input type="text" class="form-control" name="external_url" >
+                                <span class="info-text">سينتقل إلى الرابط الخاص بك عندما ينقر أي شخص على زر التسجيل</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration">المدة الزمنية</label>
                                 <input type="text" class="form-control" name="duration" >
                             </div>
                             <div class="form-group">
-                                <label for="duration_type">{{__('Duration Type')}}</label>
+                                <label for="duration_type">نوع المدة </label>
                                 <select name="duration_type" class="form-control">
-                                    <option value="min">{{__('Minute')}}</option>
-                                    <option value="hr">{{__('Hours')}}</option>
-                                    <option value="days">{{__('Days')}}</option>
+                                    <option value="min">دقائق</option>
+                                    <option value="hr">ساعات</option>
+                                    <option value="days">ايام</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="featured"><strong>{{__('Featured')}}</strong></label>
+                                <label for="featured"><strong>مميزة</strong></label>
                                 <label class="switch">
                                     <input type="checkbox" name="featured" >
                                     <span class="slider onff"></span>
                                 </label>
                             </div>
                             <div class="form-group">
-                                <label for="enroll_required"><strong>{{__('Enroll Required')}}</strong></label>
+                                <label for="enroll_required"><strong>التسجيل مطلوب</strong></label>
                                 <label class="switch">
                                     <input type="checkbox" name="enroll_required" >
                                     <span class="slider onff"></span>
@@ -117,7 +121,7 @@
                             <x-media-upload :name="'og_meta_image'" :title="__('Og Meta Image')" :id="null" :dimentions="'1920x1080px'" />
 
                             <div class="form-group">
-                                <label for="categories_id">{{__('Category')}}</label>
+                                <label for="categories_id">التصنيف</label>
                                 <select name="categories_id" class="form-control nice-select wide">
                                     @foreach($all_categories as $cat)
                                         <option value="{{$cat->id}}">{{$cat->lang->title ?? __('untitled')}}</option>
@@ -125,7 +129,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="instructor_id">{{__('Instructor')}}</label>
+                                <label for="instructor_id">المدرب</label>
                                 <select name="instructor_id" class="form-control nice-select wide">
                                     @foreach($all_instructor as $inst)
                                         <option value="{{$inst->id}}">{{$inst->name}}</option>
@@ -133,14 +137,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="status">{{__('Status')}}</label>
+                                <label for="status">الحالة</label>
                                 <select name="status" class="form-control">
-                                    <option value="draft">{{__('Draft')}}</option>
-                                    <option value="publish">{{__('Publish')}}</option>
+                                    <option value="draft">مسودة</option>
+                                    <option value="publish">منشور</option>
                                 </select>
                             </div>
                             <div class="iconbox-repeater-wrapper dynamic-repeater">
-                                <label for="additional_info" class="d-block">{{__('Curriculum')}} <span class="d-none"><i class="fas fa-spinner fa-spin"></i></span></label>
+                                <label for="additional_info" class="d-block">المقرر  <span class="d-none"><i class="fas fa-spinner fa-spin"></i></span></label>
                                <div class="curriculmn-outer-wrap">
                                    <div class="curriculmn-repeater-wrap">
                                        <div class="action-wrap">
@@ -159,10 +163,10 @@
                                            @foreach($all_languages as $lang)
                                                <div class="tab-pane fade @if($lang->slug == $default_lang) show active @endif" id="repeater_tab_{{$lang->slug}}" role="tabpanel" >
                                                    <div class="form-group">
-                                                       <input type="text" class="form-control" name="curriculum_title[1][{{$lang->slug}}]" placeholder="{{__('Curriculum title')}}">
+                                                       <input type="text" class="form-control" name="curriculum_title[1][{{$lang->slug}}]" placeholder="عنوان المقرر">
                                                    </div>
                                                    <div class="form-group">
-                                                       <textarea  class="form-control max-height-120" name="curriculum_description[1][{{$lang->slug}}]"cols="30" rows="10" placeholder="{{__('Curriculum description')}}"></textarea>
+                                                       <textarea  class="form-control max-height-120" name="curriculum_description[1][{{$lang->slug}}]"cols="30" rows="10" placeholder="وصف المقرر"></textarea>
                                                    </div>
                                                </div>
                                            @endforeach
@@ -170,7 +174,7 @@
                                    </div>
                                    <div class="all-field-wrap lesson">
                                        <div class="form-group">
-                                           <input type="text" class="form-control" name="course_lesson[1][]"  placeholder="{{__('create new lesson')}}">
+                                           <input type="text" class="form-control" name="course_lesson[1][]"  placeholder="انشاء درس جديد">
                                        </div>
                                        <div class="action-wrap">
                                            <span class="edit d-none"><a href="#"><i class="ti-pencil"></i></a></span>
@@ -181,7 +185,7 @@
                                </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">{{__('Add New')}}</button>
+                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">اضافة</button>
                         </form>
                     </div>
                 </div>
