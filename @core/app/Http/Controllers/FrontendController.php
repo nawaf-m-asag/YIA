@@ -56,9 +56,12 @@ use App\Counterup;
 use App\Testimonial;
 use App\VideoGallery;
 use App\Works;
-use App\Discounts;
 use App\WorksCategory;
+use App\Discounts;
 use App\Branches;
+use App\AwardApplicant;
+use App\Awards;
+use App\AwardsCategory;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
@@ -649,7 +652,7 @@ class FrontendController extends Controller
         ]);
     }
 
-    public function plan_order($id)
+     public function plan_order($id)
     {
         $order_details = PricePlan::findOrFail($id);
         $branches = Branches::All();
@@ -658,7 +661,6 @@ class FrontendController extends Controller
             'branches'=> $branches
         ]);
     }
-
     public function request_quote()
     {
         return view('frontend.pages.quote-page');
@@ -1319,8 +1321,6 @@ class FrontendController extends Controller
         return $pdf->download('package-invoice.pdf');
     }
 
-
-
     public function testimonials()
     {
         $default_lang = Language::where('default', 1)->first();
@@ -1455,10 +1455,109 @@ class FrontendController extends Controller
         $partner = Brand::findOrFail($id);
         return view('frontend.pages.partners_single')->with([ 'partner' => $partner]);
     }
-
+    
     public function discounts_page()
     {
         $all_discounts = Discounts::all();
         return view('frontend.pages.discounts')->with([ 'all_discounts' => $all_discounts]);
     }
+     
+    //award
+    public function awards()
+    {
+        $default_lang = Language::where('default', 1)->first();
+        $lang = !empty(session()->get('lang')) ? session()->get('lang') : $default_lang->slug;
+
+        $all_awards = Awards::where(['status' => 'publish', 'lang' => $lang])->orderBy('id', 'desc')->paginate(get_static_option('site_award_post_items'));
+        $all_award_category = AwardsCategory::where(['status' => 'publish', 'lang' => $lang])->get();
+        return view('frontend.pages.awards.awards')->with([
+            'all_awards' => $all_awards,
+            'all_award_category' => $all_award_category,
+        ]);
+    }
+
+    public function awards_category($id, $any)
+    {
+        $default_lang = Language::where('default', 1)->first();
+        $lang = !empty(session()->get('lang')) ? session()->get('lang') : $default_lang->slug;
+
+        $all_awards = Awards::where(['status' => 'publish', 'lang' => $lang, 'category_id' => $id])->orderBy('id', 'desc')->paginate(get_static_option('site_job_post_items'));
+        if (empty($all_awards)){
+            abort(404);
+        }
+        $all_award_category = AwardsCategory::where(['status' => 'publish', 'lang' => $lang])->get();
+        $category_name = AwardsCategory::find($id)->title;
+        return view('frontend.pages.awards.awards-category')->with([
+            'all_awards' => $all_awards,
+            'all_award_category' => $all_award_category,
+            'category_name' => $category_name,
+        ]);
+    }
+
+    public function awards_search(Request $request)
+    {
+
+        $default_lang = Language::where('default', 1)->first();
+        $lang = !empty(session()->get('lang')) ? session()->get('lang') : $default_lang->slug;
+
+        $all_awards = Awards::where(['status' => 'publish', 'lang' => $lang])->where('title', 'LIKE', '%' . $request->search . '%')->paginate(get_static_option('site_award_post_items'));
+        $all_award_category = AwardsCategory::where(['status' => 'publish', 'lang' => $lang])->get();
+        $search_term = $request->search;
+
+        return view('frontend.pages.awards.awards-search')->with([
+            'all_awards' => $all_awards,
+            'all_award_category' => $all_award_category,
+            'search_term' => $search_term,
+        ]);
+    }
+
+    public function awards_single($slug)
+    {
+        $default_lang = Language::where('default', 1)->first();
+        $lang = !empty(session()->get('lang')) ? session()->get('lang') : $default_lang->slug;
+
+        $award = Awards::where('slug', $slug)->first();
+        if (empty($award)) {
+            abort(404);
+        }
+        $all_award_category = AwardsCategory::where(['status' => 'publish', 'lang' => $lang])->get();
+        return view('frontend.pages.awards.awards-single')->with([
+            'award' => $award,
+            'all_award_category' => $all_award_category
+        ]);
+    }
+
+    public function awards_apply($id)
+    {
+        $award = Awards::findOrFail($id);
+
+        return view('frontend.pages.awards.awards-apply')->with([
+            'award' => $award
+        ]);
+    }
+    public function award_payment_cancel($id)
+    {
+        $extract_id = substr($id, 6);
+        $extract_id = substr($extract_id, 0, -6);
+        $applicant_details = AwardApplicant::find($extract_id);
+        $award_details = Awards::find($applicant_details->awards_id);
+        if (empty($applicant_details)) {
+            return redirect_404_page();
+        }
+        return view('frontend.pages.awards.award-cancel')->with(['applicant_details' => $applicant_details, 'award_details' => $award_details]);
+    }
+
+    public function award_payment_success($id)
+    {
+        $extract_id = substr($id, 6);
+        $extract_id = substr($extract_id, 0, -6);
+        $applicant_details = AwardApplicant::find($extract_id);
+        if (empty($applicant_details)) {
+            return redirect_404_page();
+        }
+        $award_details = Awards::find($applicant_details->awards_id);
+        return view('frontend.pages.awards.award-success')->with(['applicant_details' => $applicant_details, 'award_details' => $award_details]);
+    }
+
+
 }//end class
