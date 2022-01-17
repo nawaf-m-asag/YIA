@@ -1339,6 +1339,18 @@ function get_jobs_category_by_id($id,$type = ''){
 
     return $return_val;
 }
+function get_awards_category_by_id($id,$type = ''){
+    $return_val = __('uncategorized');
+    $blog_cat = \App\AwardsCategory::find($id);
+    if (!empty($blog_cat)){
+        $return_val = $blog_cat->title;
+        if ($type == 'link' ){
+            $return_val = '<a href="'.route('frontend.awards.category',['id' => $blog_cat->id,'any' => Str::slug($blog_cat->title) ]).'">'.$blog_cat->title.'</a>';
+        }
+    }
+
+    return $return_val;
+}
 
 function get_events_category_by_id($id,$type = ''){
     $return_val = __('uncategorized');
