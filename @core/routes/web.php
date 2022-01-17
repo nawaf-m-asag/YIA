@@ -252,7 +252,37 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::get('/job-cancel/{id}', 'FrontendController@job_payment_cancel')->name('frontend.job.payment.cancel');
 
 });
+/*==============================================
+    FRONTEND ROUTES: JOB MODULE
+==============================================*/
+Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_mode', 'moduleCheck:job_module_status']], function () {
+    $awards_page_slug = !empty(get_static_option('awards_page_slug')) ? get_static_option('awards_page_slug') : 'awards';
+    Route::get($awards_page_slug, 'FrontendController@awards')->name('frontend.awards');
+    Route::get( $awards_page_slug.'/{slug}', 'FrontendController@awards_single')->name('frontend.awards.single');
+    Route::get( $awards_page_slug.'-category/{id}/{any}', 'FrontendController@awards_category')->name('frontend.awards.category');
+    Route::get($awards_page_slug.'-search', 'FrontendController@awards_search')->name('frontend.awards.search');
 
+    Route::get('awards/apply/{id}', 'FrontendController@awards_apply')->name('frontend.awards.apply');
+    Route::post('awards/apply', 'AwardPaymentController@store_awards_applicant_data')->name('frontend.awards.apply.store');
+    /*-----------------------------------------
+        JOB MODULE: PAYMENT GATEWAY ROUTES
+    -----------------------------------------*/
+    Route::get('/award-paypal-ipn', 'AwardPaymentController@paypal_ipn')->name('frontend.award.paypal.ipn');
+    Route::post('/award-paytm-ipn', 'AwardPaymentController@paytm_ipn')->name('frontend.award.paytm.ipn');
+    Route::post('/award-stripe','AwardPaymentController@stripe_charge')->name('frontend.award.stripe.charge');
+    Route::get('/award-stripe/pay','AwardPaymentController@stripe_ipn')->name('frontend.award.stripe.ipn');
+    Route::post('/award-razorpay', 'AwardPaymentController@razorpay_ipn')->name('frontend.award.razorpay.ipn');
+    Route::post('/award-paystack/pay', 'AwardPaymentController@paystack_pay')->name('frontend.award.paystack.pay');
+    Route::get('/award-flullterwave/callback', 'AwardPaymentController@flutterwave_callback')->name('frontend.award.flutterwave.callback');
+    Route::get('/award-mollie/webhook', 'AwardPaymentController@mollie_webhook')->name('frontend.award.mollie.webhook');
+
+    /*-------------------------------------------------
+       JOB MODULE: PAYMENT SUCCESS/CANCEL ROUTES
+   ----------------------------------------------------*/
+    Route::get('/award-success/{id}', 'FrontendController@award_payment_success')->name('frontend.award.payment.success');
+    Route::get('/award-cancel/{id}', 'FrontendController@award_payment_cancel')->name('frontend.award.payment.cancel');
+
+});
 Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_mode', 'HtmlMinifier']], function () {
 
     Route::get('/', 'FrontendController@index')->name('homepage');
@@ -738,6 +768,64 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
         Route::get('/cancel-page-settings', 'JobsController@cancel_page_settings')->name('admin.jobs.cancel.page.settings');
         Route::post('/cancel-page-settings', 'JobsController@update_cancel_page_settings');
     });
+
+     /*==============================================
+         awards MODULE
+     ==============================================*/
+     Route::prefix('awards')->middleware(['adminPermissionCheck:Job Post Manage', 'moduleCheck:job_module_status'])->group(function () {
+
+        Route::get('/', 'AwardsController@all_awards')->name('admin.awards.all');
+        Route::get('/new', 'AwardsController@new_award')->name('admin.awards.new');
+        Route::post('/new', 'AwardsController@store_award');
+        Route::get('/edit/{id}', 'AwardsController@edit_award')->name('admin.awards.edit');
+        Route::post('/update', 'AwardsController@update_award')->name('admin.awards.update');
+        Route::post('/delete/{id}', 'AwardsController@delete_award')->name('admin.awards.delete');
+        Route::post('/clone', 'AwardsController@clone_award')->name('admin.awards.clone');
+        Route::post('/bulk-action', 'AwardsController@bulk_action')->name('admin.awards.bulk.action');
+        Route::post('/slug-check', 'AwardsController@slug_check')->name('admin.awards.slug.check');
+
+        /*-----------------------------------
+           awards MODULE : PAGE SETTINGS ROUTES
+        ------------------------------------*/
+        Route::get('/page-settings', 'AwardsController@page_settings')->name('admin.awards.page.settings');
+        Route::post('/page-settings', 'AwardsController@update_page_settings');
+        Route::get('/single-page-settings', 'AwardsController@single_page_settings')->name('admin.awards.single.page.settings');
+        Route::post('/single-page-settings', 'AwardsController@update_single_page_settings');
+
+        /*-----------------------------------
+           award MODULE : CATEGORY ROUTES
+        ------------------------------------*/
+        Route::group(['prefix' => 'category'],function (){
+            Route::get('/', 'AwardsCategoryController@all_awards_category')->name('admin.awards.category.all');
+            Route::post('/new', 'AwardsCategoryController@store_awards_category')->name('admin.awards.category.new');
+            Route::post('/update', 'AwardsCategoryController@update_awards_category')->name('admin.awards.category.update');
+            Route::post('/delete/{id}', 'AwardsCategoryController@delete_awards_category')->name('admin.awards.category.delete');
+            Route::post('/bulk-action', 'AwardsCategoryController@bulk_action')->name('admin.awards.category.bulk.action');
+            Route::post('/lang', 'AwardsCategoryController@Language_by_slug')->name('admin.awards.category.by.lang');
+        });
+
+
+        /*-----------------------------------
+          awards MODULE : APPLICANT ROUTES
+       ------------------------------------*/
+        Route::group(['prefix' => 'applicant'],function () {
+            Route::get('/', 'AwardsController@all_awards_applicant')->name('admin.awards.applicant');
+            Route::post('/delete/{id}', 'AwardsController@delete_award_applicant')->name('admin.awards.applicant.delete');
+            Route::post('/bulk-delete', 'AwardsController@award_applicant_bulk_delete')->name('admin.awards.applicant.bulk.delete');
+            Route::get('/report', 'AwardsController@award_applicant_report')->name('admin.awards.applicant.report');
+            Route::post('/mail', 'AwardsController@award_applicant_mail')->name('admin.awards.applicant.mail');
+        });
+
+
+        /*-----------------------------------
+          awards MODULE : PAGE SETTINGS ROUTES
+        ------------------------------------*/
+        Route::get('/success-page-settings', 'AwardsController@success_page_settings')->name('admin.awards.success.page.settings');
+        Route::post('/success-page-settings', 'AwardsController@update_success_page_settings');
+        Route::get('/cancel-page-settings', 'AwardsController@cancel_page_settings')->name('admin.awards.cancel.page.settings');
+        Route::post('/cancel-page-settings', 'AwardsController@update_cancel_page_settings');
+    });
+
 
     /*==============================================
           SERVICES MODULE
