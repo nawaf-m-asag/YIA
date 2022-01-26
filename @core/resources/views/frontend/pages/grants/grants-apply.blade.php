@@ -1,9 +1,9 @@
 @extends('frontend.frontend-page-master')
 @section('site-title')
-    {{__('Apply To').' '}}{{$award->title}}
+    {{__('Apply To').' '}}{{$grant->title}}
 @endsection
 @section('page-title')
-    {{__('Apply To').' '}}{{$award->title}}
+    {{__('Apply To').' '}}{{$grant->title}}
 @endsection
 @section('content')
     <section class="blog-content-area padding-120">
@@ -19,19 +19,19 @@
                             @endforeach
                             </ul>
                         @endif
-                        <h2 class="job-apply-title"> {{__('Apply To').' '}}{{$award->title}}</h2>
-                        <form action="{{route('frontend.awards.apply.store')}}" method="post" enctype="multipart/form-data">
+                        <h2 class="job-apply-title"> {{__('Apply To').' '}}{{$grant->title}}</h2>
+                        <form action="{{route('frontend.grants.apply.store')}}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <input type="hidden" name="award_id" value="{{$award->id}}">
+                            <input type="hidden" name="grants_id" value="{{$grant->id}}">
                             <div class="form-group">
                                 <input type="text" name="name" placeholder="{{__('Your Name')}}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <input type="email" name="email" placeholder="{{__('Your Email')}}" class="form-control">
                             </div>
-                            {!! render_form_field_for_frontend(get_static_option('apply_award_page_form_fields')) !!}
-                            @if(!empty($award->application_fee_status) && $award->application_fee > 0)
-                                <input type="hidden" name="application_fee" value="{{$award->application_fee}}">
+                            {!! render_form_field_for_frontend(get_static_option('apply_job_page_form_fields')) !!}
+                            @if(!empty($grant->application_fee_status) && $grant->application_fee > 0)
+                                <input type="hidden" name="application_fee" value="{{$grant->application_fee}}">
                             {!! render_payment_gateway_for_form()!!}
                              @if(!empty(get_static_option('manual_payment_gateway')))
                                 <div class="form-group manual_payment_transaction_field @if( get_static_option('site_default_payment_gateway') === 'manual_payment') d-block @endif " >
