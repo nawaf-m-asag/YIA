@@ -253,7 +253,7 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
 
 });
 /*==============================================
-    FRONTEND ROUTES: JOB MODULE
+    FRONTEND ROUTES: award MODULE
 ==============================================*/
 Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_mode', 'moduleCheck:job_module_status']], function () {
     $awards_page_slug = !empty(get_static_option('awards_page_slug')) ? get_static_option('awards_page_slug') : 'awards';
@@ -281,6 +281,40 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
    ----------------------------------------------------*/
     Route::get('/award-success/{id}', 'FrontendController@award_payment_success')->name('frontend.award.payment.success');
     Route::get('/award-cancel/{id}', 'FrontendController@award_payment_cancel')->name('frontend.award.payment.cancel');
+
+});
+
+
+
+/*==============================================
+    FRONTEND ROUTES: grant MODULE
+==============================================*/
+Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_mode', 'moduleCheck:job_module_status']], function () {
+    $grants_page_slug = !empty(get_static_option('grants_page_slug')) ? get_static_option('grants_page_slug') : 'grants';
+    Route::get($grants_page_slug, 'FrontendController@grants')->name('frontend.grants');
+    Route::get( $grants_page_slug.'/{slug}', 'FrontendController@grants_single')->name('frontend.grants.single');
+    Route::get( $grants_page_slug.'-category/{id}/{any}', 'FrontendController@grants_category')->name('frontend.grants.category');
+    Route::get($grants_page_slug.'-search', 'FrontendController@grants_search')->name('frontend.grants.search');
+
+    Route::get('grants/apply/{id}', 'FrontendController@grants_apply')->name('frontend.grants.apply');
+    Route::post('grants/apply', 'GrantPaymentController@store_grants_applicant_data')->name('frontend.grants.apply.store');
+    /*-----------------------------------------
+        JOB MODULE: PAYMENT GATEWAY ROUTES
+    -----------------------------------------*/
+    Route::get('/grant-paypal-ipn', 'GrantPaymentController@paypal_ipn')->name('frontend.grants.paypal.ipn');
+    Route::post('/grant-paytm-ipn', 'GrantPaymentController@paytm_ipn')->name('frontend.grants.paytm.ipn');
+    Route::post('/grant-stripe','GrantPaymentController@stripe_charge')->name('frontend.grants.stripe.charge');
+    Route::get('/grant-stripe/pay','GrantPaymentController@stripe_ipn')->name('frontend.grants.stripe.ipn');
+    Route::post('/grant-razorpay', 'GrantPaymentController@razorpay_ipn')->name('frontend.grants.razorpay.ipn');
+    Route::post('/grant-paystack/pay', 'GrantPaymentController@paystack_pay')->name('frontend.grants.paystack.pay');
+    Route::get('/grant-flullterwave/callback', 'GrantPaymentController@flutterwave_callback')->name('frontend.grants.flutterwave.callback');
+    Route::get('/grant-mollie/webhook', 'GrantPaymentController@mollie_webhook')->name('frontend.grants.mollie.webhook');
+
+    /*-------------------------------------------------
+       JOB MODULE: PAYMENT SUCCESS/CANCEL ROUTES
+   ----------------------------------------------------*/
+    Route::get('/grant-success/{id}', 'FrontendController@grant_payment_success')->name('frontend.grant.payment.success');
+    Route::get('/grant-cancel/{id}', 'FrontendController@grant_payment_cancel')->name('frontend.grant.payment.cancel');
 
 });
 Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_mode', 'HtmlMinifier']], function () {
@@ -335,6 +369,7 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     $price_plan_page_slug = get_static_option('price_plan_page_slug') ?? 'price-plan';
     $contact_page_slug = get_static_option('contact_page_slug') ?? 'contact';
     $blog_page_slug = get_static_option('blog_page_slug') ?? 'blog';
+    $ads_page_slug = get_static_option('ads_page_slug') ?? 'ads';
     $quote_page_slug = get_static_option('quote_page_slug') ?? 'request-quote';
     $testimonial_page_slug = get_static_option('testimonial_page_slug') ?? 'testimonials';
     $feedback_page_slug = get_static_option('feedback_page_slug') ?? 'feedback';
@@ -358,8 +393,10 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
     Route::get('/' . $about_page_slug, 'FrontendController@about_page')->name('frontend.about');
     Route::get('/' . $faq_page_slug, 'FrontendController@faq_page')->name('frontend.faq');
     Route::get('/' . $team_page_slug, 'FrontendController@team_page')->name('frontend.team');
+    Route::get('/' . $team_page_slug.'-single/{id}', 'FrontendController@team_single_page')->name('frontend.team.single');
     Route::get('/' . $price_plan_page_slug, 'FrontendController@price_plan_page')->name('frontend.price.plan');
     Route::get('/discounts', 'FrontendController@discounts_page')->name('frontend.discounts');
+    Route::get('/supporters', 'FrontendController@supporters_page')->name('frontend.supporters');
     Route::get('/partners', 'FrontendController@partners_page')->name('frontend.partners');
     Route::get('/partners/{id}', 'FrontendController@partners_single_page')->name('frontend.partners.single_page');
     Route::get('/universities', 'FrontendController@universities_page')->name('frontend.universities');
@@ -382,6 +419,14 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
         Route::get( $blog_page_slug.'-search', 'FrontendController@blog_search_page')->name('frontend.blog.search');
         Route::get( $blog_page_slug.'-category/{id}/{any}', 'FrontendController@category_wise_blog_page')->name('frontend.blog.category');
         Route::get( $blog_page_slug.'-tags/{name}', 'FrontendController@tags_wise_blog_page')->name('frontend.blog.tags.page');
+   /*--------------------------------------
+        FRONTEND: ADS ROUTES
+    ---------------------------------------*/
+    Route::get($ads_page_slug, 'FrontendController@ads_page')->name('frontend.ads');
+    Route::get( $ads_page_slug.'/{slug}', 'FrontendController@ads_single_page')->name('frontend.ads.single');
+    Route::get( $ads_page_slug.'-search', 'FrontendController@ads_search_page')->name('frontend.ads.search');
+    Route::get( $ads_page_slug.'-category/{id}/{any}', 'FrontendController@category_wise_ads_page')->name('frontend.ads.category');
+    Route::get( $ads_page_slug.'-tags/{name}', 'FrontendController@tags_wise_ads_page')->name('frontend.ads.tags.page');
 
     /*------------------------------------
         FRONTEND: ROUTES
@@ -824,6 +869,68 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
         Route::post('/success-page-settings', 'AwardsController@update_success_page_settings');
         Route::get('/cancel-page-settings', 'AwardsController@cancel_page_settings')->name('admin.awards.cancel.page.settings');
         Route::post('/cancel-page-settings', 'AwardsController@update_cancel_page_settings');
+    });
+
+
+
+
+
+
+     /*==============================================
+         Grants MODULE
+     ==============================================*/
+     Route::prefix('grants')->middleware(['adminPermissionCheck:Grant Post Manage', 'moduleCheck:job_module_status'])->group(function () {
+
+        Route::get('/', 'GrantsController@all_grants')->name('admin.grants.all');
+        Route::get('/new', 'GrantsController@new_grant')->name('admin.grants.new');
+        Route::post('/new', 'GrantsController@store_grant');
+        Route::get('/edit/{id}', 'GrantsController@edit_grant')->name('admin.grants.edit');
+        Route::post('/update', 'GrantsController@update_grant')->name('admin.grants.update');
+        Route::post('/delete/{id}', 'GrantsController@delete_grant')->name('admin.grants.delete');
+        Route::post('/clone', 'GrantsController@clone_grant')->name('admin.grants.clone');
+        Route::post('/bulk-action', 'GrantsController@bulk_action')->name('admin.grants.bulk.action');
+        Route::post('/slug-check', 'GrantsController@slug_check')->name('admin.grants.slug.check');
+
+        /*-----------------------------------
+           grants MODULE : PAGE SETTINGS ROUTES
+        ------------------------------------*/
+        Route::get('/page-settings', 'GrantsController@page_settings')->name('admin.grants.page.settings');
+        Route::post('/page-settings', 'GrantsController@update_page_settings');
+        Route::get('/single-page-settings', 'GrantsController@single_page_settings')->name('admin.grants.single.page.settings');
+        Route::post('/single-page-settings', 'GrantsController@update_single_page_settings');
+
+        /*-----------------------------------
+           grants MODULE : CATEGORY ROUTES
+        ------------------------------------*/
+        Route::group(['prefix' => 'category'],function (){
+            Route::get('/', 'GrantsCategoryController@all_grants_category')->name('admin.grants.category.all');
+            Route::post('/new', 'GrantsCategoryController@store_grants_category')->name('admin.grants.category.new');
+            Route::post('/update', 'GrantsCategoryController@update_grants_category')->name('admin.grants.category.update');
+            Route::post('/delete/{id}', 'GrantsCategoryController@delete_grants_category')->name('admin.grants.category.delete');
+            Route::post('/bulk-action', 'GrantsCategoryController@bulk_action')->name('admin.grants.category.bulk.action');
+            Route::post('/lang', 'GrantsCategoryController@Language_by_slug')->name('admin.grants.category.by.lang');
+        });
+
+
+        /*-----------------------------------
+          grants MODULE : APPLICANT ROUTES
+       ------------------------------------*/
+        Route::group(['prefix' => 'applicant'],function () {
+            Route::get('/', 'GrantsController@all_grants_applicant')->name('admin.grants.applicant');
+            Route::post('/delete/{id}', 'GrantsController@delete_grant_applicant')->name('admin.grants.applicant.delete');
+            Route::post('/bulk-delete', 'GrantsController@grant_applicant_bulk_delete')->name('admin.grants.applicant.bulk.delete');
+            Route::get('/report', 'GrantsController@grant_applicant_report')->name('admin.grants.applicant.report');
+            Route::post('/mail', 'GrantsController@grant_applicant_mail')->name('admin.grants.applicant.mail');
+        });
+
+
+        /*-----------------------------------
+          grants MODULE : PAGE SETTINGS ROUTES
+        ------------------------------------*/
+        Route::get('/success-page-settings', 'GrantsController@success_page_settings')->name('admin.grants.success.page.settings');
+        Route::post('/success-page-settings', 'GrantsController@update_success_page_settings');
+        Route::get('/cancel-page-settings', 'GrantsController@cancel_page_settings')->name('admin.grants.cancel.page.settings');
+        Route::post('/cancel-page-settings', 'GrantsController@update_cancel_page_settings');
     });
 
 
@@ -1924,6 +2031,16 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
             Route::get('/apply-job-form', 'FormBuilderController@apply_job_form_index')->name('admin.form.builder.apply.job.form');
             Route::post('/apply-job-form', 'FormBuilderController@update_apply_job_form');
             /*-------------------------
+               APPLY grant FORM ROUTES
+              --------------------------*/
+              Route::get('/apply-grant-form', 'FormBuilderController@apply_grant_form_index')->name('admin.form.builder.apply.award.form');
+              Route::post('/apply-grant-form', 'FormBuilderController@update_apply_grant_form');
+            /*-------------------------
+               APPLY AWARD FORM ROUTES
+              --------------------------*/
+              Route::get('/apply-award-form', 'FormBuilderController@apply_award_form_index')->name('admin.form.builder.apply.award.form');
+              Route::post('/apply-award-form', 'FormBuilderController@update_apply_award_form');
+            /*-------------------------
                EVENT ATTENDANCE FORM ROUTES
               --------------------------*/
             Route::get('/event-attendance', 'FormBuilderController@event_attendance_form_index')->name('admin.form.builder.event.attendance.form');
@@ -2030,7 +2147,17 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
         Route::post('/delete/{id}', 'DiscountController@delete')->name('admin.discounts.delete');
         Route::post('/bulk-action', 'DiscountController@bulk_action')->name('admin.discounts.bulk.action');
     });
-
+     /*==============================================
+       Supporters LOGOS
+    ==============================================*/
+    Route::prefix('supporters')->middleware(['adminPermissionCheck:Supporters'])->group(function () {
+        //brand logos
+        Route::get('/', 'SupportersController@index')->name('admin.supporters');
+        Route::post('/', 'SupportersController@store');
+        Route::post('/update', 'SupportersController@update')->name('admin.supporters.update');
+        Route::post('/delete/{id}', 'SupportersController@delete')->name('admin.supporters.delete');
+        Route::post('/bulk-action', 'SupportersController@bulk_action')->name('admin.supporters.bulk.action');
+    });
     /*==============================================
        BLOGS
     ==============================================*/
@@ -2058,17 +2185,61 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
             Route::post('/update', 'BlogController@update_category')->name('admin.blog.category.update');
             Route::post('/bulk-action', 'BlogController@category_bulk_action')->name('admin.blog.category.bulk.action');
         });
-
-
+        
         Route::post('/blog-lang-by-cat', 'BlogController@Language_by_slug')->name('admin.blog.lang.cat');
         /*-------------------------
-           BLOG PAGE SETTINGS ROUTES
+           ADS PAGE SETTINGS ROUTES
         --------------------------*/
         Route::get('/page-settings', 'BlogController@blog_page_settings')->name('admin.blog.page.settings');
         Route::post('/page-settings', 'BlogController@update_blog_page_settings');
         Route::get('/single-settings', 'BlogController@blog_single_page_settings')->name('admin.blog.single.settings');
         Route::post('/single-settings', 'BlogController@update_blog_single_page_settings');
     });
+
+
+
+
+        
+    /*==============================================
+       ADS
+    ==============================================*/
+    Route::prefix('ads')->middleware(['adminPermissionCheck:Ads Manage'])->group(function () {
+        /*-------------------------
+          ADS ROUTES
+        --------------------------*/
+        Route::get('/', 'AdsController@index')->name('admin.ads');
+        Route::get('/new', 'AdsController@new_ads')->name('admin.ads.new');
+        Route::post('/new', 'AdsController@store_new_ads');
+        Route::post('/clone', 'AdsController@clone_ads')->name('admin.ads.clone');
+        Route::get('/edit/{id}', 'AdsController@edit_ads')->name('admin.ads.edit');
+        Route::post('/update/{id}', 'AdsController@update_ads')->name('admin.ads.update');
+        Route::post('/delete/{id}', 'AdsController@delete_ads')->name('admin.ads.delete');
+        Route::post('/bulk-action', 'AdsController@bulk_action')->name('admin.ads.bulk.action');
+        Route::post('/slug-check', 'AdsController@slug_check')->name('admin.ads.slug.check');
+
+        /*-------------------------
+          ADS CATEGORIES ROUTES
+        --------------------------*/
+        Route::group(['prefix' => 'category'],function (){
+            Route::get('/', 'AdsController@category')->name('admin.ads.category');
+            Route::post('/', 'AdsController@new_category');
+            Route::post('/delete/{id}', 'AdsController@delete_category')->name('admin.ads.category.delete');
+            Route::post('/update', 'AdsController@update_category')->name('admin.ads.category.update');
+            Route::post('/bulk-action', 'AdsController@category_bulk_action')->name('admin.ads.category.bulk.action');
+        });
+
+
+        Route::post('/ads-lang-by-cat', 'AdsController@Language_by_slug')->name('admin.ads.lang.cat');
+        /*-------------------------
+           ADS PAGE SETTINGS ROUTES
+        --------------------------*/
+        Route::get('/page-settings', 'AdsController@ads_page_settings')->name('admin.ads.page.settings');
+        Route::post('/page-settings', 'AdsController@update_ads_page_settings');
+        Route::get('/single-settings', 'AdsController@ads_single_page_settings')->name('admin.ads.single.settings');
+        Route::post('/single-settings', 'AdsController@update_ads_single_page_settings');
+    });
+
+
 
     /*==============================================
       PAGES ROUTES
