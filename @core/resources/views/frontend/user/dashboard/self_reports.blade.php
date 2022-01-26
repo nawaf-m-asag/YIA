@@ -68,8 +68,7 @@
     </style>
 @endsection
 @section('section')
-    @if(!empty(get_static_option('course_module_status')))
-        @if(count($all_self_reports) > 0)
+
         <div class="limiter">
             <form id="download" action="{{route('frontend.course.self_reports.generate')}}"  method="post">
                 @csrf
@@ -148,7 +147,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">  اضافة شهادة الشهادة</h5>
+                        <h5 class="modal-title">  اضافة شهادة</h5>
                         <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
                     </div>
                     <form action="{{route('user.home.self_reports.stor')}}" id="self_reports_edit_modal_form" method="post" enctype="multipart/form-data">
@@ -186,11 +185,7 @@
                 </div>
             </div>
         </div>
-    
-        @else
-            <div class="alert alert-warning">{{__('Nothing Found')}}</div>
-        @endif
-    @endif
+
 @endsection
 @section('scripts')
     <script>
