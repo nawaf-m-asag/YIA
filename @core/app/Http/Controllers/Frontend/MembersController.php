@@ -58,7 +58,7 @@ class MembersController extends Controller
         }
         $users_query->orderBy($sort_by,$sorting);
 
-        $all_users = $users_query->paginate(5);
+        $all_users = $users_query->paginate(8);
 
         $category_list = user::get();
         return view($this->base_path.'members-all')->with([
