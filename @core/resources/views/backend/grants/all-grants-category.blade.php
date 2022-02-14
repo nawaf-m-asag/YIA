@@ -1,6 +1,6 @@
 @extends('backend.admin-master')
 @section('site-title')
-    {{__('Arants Category')}}
+    تصنيفات المنح
 @endsection
 @section('style')
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
@@ -36,14 +36,14 @@
             <div class="col-lg-6 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">{{__('All Grants Categories')}}</h4>
+                        <h4 class="header-title">كل تصنيفات المنح</h4>
                         <div class="bulk-delete-wrapper">
                             <div class="select-box-wrap">
                                 <select name="bulk_option" id="bulk_option">
-                                    <option value="">{{{__('Bulk Action')}}}</option>
-                                    <option value="delete">{{{__('Delete')}}}</option>
+                                    <option value="">اجراء جماعي</option>
+                                    <option value="delete">حذف</option>
                                 </select>
-                                <button class="btn btn-primary btn-sm" id="bulk_delete_btn">{{__('Apply')}}</button>
+                                <button class="btn btn-primary btn-sm" id="bulk_delete_btn">تنفيذ</button>
                             </div>
                         </div>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -67,10 +67,10 @@
                                                     <input type="checkbox" class="all-checkbox">
                                                 </div>
                                             </th>
-                                            <th>{{__('ID')}}</th>
-                                            <th>{{__('Name')}}</th>
-                                            <th>{{__('Status')}}</th>
-                                            <th>{{__('Action')}}</th>
+                                            <th>المعرف</th>
+                                            <th>اسم التصنيف</th>
+                                            <th>الحالة</th>
+                                            <th>الاحداث</th>
                                             </thead>
                                             <tbody>
                                             @foreach($category as $data)
@@ -119,11 +119,11 @@
             <div class="col-lg-6 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">{{__('Add New Category')}}</h4>
+                        <h4 class="header-title">اضافة تصنيف جديد</h4>
                         <form action="{{route('admin.grants.category.new')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label for="language">{{__('Language')}}</label>
+                                <label for="language">اللغة</label>
                                 <select name="lang" id="language" class="form-control">
                                     @foreach($all_languages as $language)
                                         <option value="{{$language->slug}}">{{$language->name}}</option>
@@ -131,17 +131,17 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="name">{{__('Name')}}</label>
-                                <input type="text" class="form-control"  id="name" name="title" placeholder="{{__('Name')}}">
+                                <label for="name">اسم التصنيف</label>
+                                <input type="text" class="form-control"  id="name" name="title" placeholder="اسم التصنيف">
                             </div>
                             <div class="form-group">
-                                <label for="status">{{__('Status')}}</label>
+                                <label for="status">الحالة</label>
                                 <select name="status" class="form-control" id="status">
-                                    <option value="publish">{{__("Publish")}}</option>
-                                    <option value="draft">{{__("Draft")}}</option>
+                                    <option value="publish">منشور</option>
+                                    <option value="draft">نسخة</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">{{__('Add New')}}</button>
+                            <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">اضافة جديد</button>
                         </form>
                     </div>
                 </div>
@@ -152,7 +152,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{__('Update Category')}}</h5>
+                    <h5 class="modal-title">تعديل التصنيف</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
                 </div>
                 <form action="{{route('admin.grants.category.update')}}"  method="post">
@@ -160,7 +160,7 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label for="edit_language">{{__('Language')}}</label>
+                            <label for="edit_language">اللغة</label>
                             <select name="lang" id="edit_language" class="form-control">
                                 @foreach($all_languages as $language)
                                     <option value="{{$language->slug}}">{{$language->name}}</option>
@@ -168,20 +168,20 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="edit_name">{{__('Name')}}</label>
-                            <input type="text" class="form-control"  id="edit_name" name="title" placeholder="{{__('Name')}}">
+                            <label for="edit_name">اسم التصنيف</label>
+                            <input type="text" class="form-control"  id="edit_name" name="title" placeholder="اسم التصنيف">
                         </div>
                         <div class="form-group">
-                            <label for="edit_status">{{__('Status')}}</label>
+                            <label for="edit_status">الحالة</label>
                             <select name="status" class="form-control" id="edit_status">
-                                <option value="draft">{{__("Draft")}}</option>
-                                <option value="publish">{{__("Publish")}}</option>
+                                <option value="draft">نسخة</option>
+                                <option value="publish">منشور</option>
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Close')}}</button>
-                        <button type="submit" class="btn btn-primary">{{__('Save Change')}}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                        <button type="submit" class="btn btn-primary">حفظ التعديل</button>
                     </div>
                 </form>
             </div>

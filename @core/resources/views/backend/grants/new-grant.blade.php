@@ -1,6 +1,6 @@
 @extends('backend.admin-master')
 @section('site-title')
-    {{__('New grant  Post')}}
+اضافة منحة جديدة
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{asset('assets/backend/css/bootstrap-tagsinput.css')}}">
@@ -20,15 +20,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="header-wrap d-flex justify-content-between">
-                            <h4 class="header-title">{{__('Add New grant  Post')}}</h4>
-                            <a href="{{route('admin.grants.all')}}" class="btn btn-primary">{{__('All Grants')}}</a>
+                            <h4 class="header-title">اضافة منحة جديدة</h4>
+                            <a href="{{route('admin.grants.all')}}" class="btn btn-primary">كل المنح</a>
                         </div>
                         <form action="{{route('admin.grants.new')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="language"><strong>{{__('Language')}}</strong></label>
+                                        <label for="language"><strong>اللغة</strong></label>
                                         <select name="lang" id="language" class="form-control">
                                             @foreach($all_languages as $lang)
                                                 <option value="{{$lang->slug}}">{{$lang->name}}</option>
@@ -36,112 +36,101 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="title">{{__('Title')}}</label>
-                                        <input type="text" class="form-control"  id="title" name="title" value="{{old('title')}}" placeholder="{{__('Title')}}">
+                                        <label for="title">العنوان</label>
+                                        <input type="text" class="form-control"  id="title" name="title" value="{{old('title')}}" placeholder="ادخل العنوان">
                                     </div>
                                     <div class="form-group">
-                                        <label for="slug">{{__('Slug')}}</label>
-                                        <input type="text" class="form-control"  id="slug" name="slug" placeholder="{{__('slug')}}">
+                                        <label for="slug">العنوان للمتصفح</label>
+                                        <input type="text" class="form-control"  id="slug" name="slug" placeholder="ادخل العنوان للمتصفح">
                                     </div>
                                     <div class="form-group">
-                                        <label for="meta_tags">{{__('Meta Tags')}}</label>
+                                        <label for="meta_tags">الكلمات المفتاحية</label>
                                         <input type="text" name="meta_tags"  class="form-control" data-role="tagsinput" id="meta_tags">
                                     </div>
                                     <div class="form-group">
-                                        <label for="meta_description">{{__('Meta Description')}}</label>
+                                        <label for="meta_description">الوصف سيو</label>
                                         <textarea name="meta_description"  class="form-control" rows="5" id="meta_description"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="position">{{__('grant Position')}}</label>
-                                        <input type="text" class="form-control"  id="position" name="position" value="{{old('position')}}" placeholder="{{__('Position')}}">
+                                        <label for="position">نوع المنحة دولية $ محلية</label>
+                                        <input type="text" class="form-control"  id="position" name="position" value="{{old('position')}}" placeholder="دولية & محلية">
                                     </div>
                                     <div class="form-group">
-                                        <label for="company_name">{{__('Company Name')}}</label>
-                                        <input type="text" class="form-control"  id="company_name" value="{{old('company_name')}}"  name="company_name" placeholder="{{__('Company Name')}}">
+                                        <label for="company_name">اسم الشركة </label>
+                                        <input type="text" class="form-control"  id="company_name" value="{{old('company_name')}}"  name="company_name" placeholder="ادخل اسم الشركة المانحة">
                                     </div>
                                     <div class="form-group">
-                                        <label for="category">{{__('Category')}}</label>
+                                        <label for="category">التصنيف</label>
                                         <select name="category_id" class="form-control" id="category">
-                                            <option value="">{{__("Select Category")}}</option>
+                                            <option value="">حدد تصنيف</option>
                                             @foreach($all_category as $category)
                                                 <option value="{{$category->id}}">{{$category->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="vacancy">{{__('Vacancy')}}</label>
-                                        <input type="text" class="form-control"  id="vacancy" value="{{old('vacancy')}}" name="vacancy" placeholder="{{__('Vacancy')}}">
+                                        <label for="vacancy">الحد الاقصى للمتقدمين</label>
+                                        <input type="text" class="form-control"  id="vacancy" value="{{old('vacancy')}}" name="vacancy" placeholder="ادخل العدد المسموح به للمقدمين ">
                                     </div>
                                     <div class="form-group">
-                                        <label for="grant_context">{{__('grant Context')}}</label>
+                                        <label for="grant_context">متطلبات المنحة</label>
                                         <input type="hidden" name="grant_context" >
                                         <div class="summernote" ></div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="grant_responsibility">{{__('grant Responsibility')}}</label>
+                                        <label for="grant_responsibility">الخبرة</label>
                                         <input type="hidden" name="grant_responsibility" >
                                         <div class="summernote" ></div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="education_requirement">{{__('Educational Requirements')}}</label>
+                                        <label for="education_requirement">المتطلبات اتعليمية</label>
                                         <input type="hidden" name="education_requirement">
                                         <div class="summernote"></div>
                                     </div>
+                                   
+                                    
                                     <div class="form-group">
-                                        <label for="experience_requirement">{{__('Experience Requirements')}}</label>
-                                        <input type="hidden" name="experience_requirement">
-                                        <div class="summernote"></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="additional_requirement">{{__('Additional Requirements')}}</label>
-                                        <input type="hidden" name="additional_requirement" >
-                                        <div class="summernote" ></div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="employment_status">{{__('Employment Status')}}</label>
+                                        <label for="employment_status">نوع المنحة</label>
                                         <select name="employment_status" id="employment_status"  class="form-control">
-                                            <option value="full_time">{{__('Full-Time')}}</option>
-                                            <option value="part_time">{{__('Part-Time')}}</option>
-                                            <option value="project_based">{{__('Project Based')}}</option>
+                                            <option value="منحة_مجانية">منحة مجانية</option>
+                                            <option value="منحة_جزئية">منحة جزئية</option>
+                                           
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="grant_location">{{__('grant Location')}}</label>
-                                        <input type="text" class="form-control"  id="grant_location" name="grant_location" value="{{old('grant_location')}}" placeholder="{{__('grant Location')}}">
+                                        <label for="grant_location">الموقع</label>
+                                        <input type="text" class="form-control"  id="grant_location" name="grant_location" value="{{old('grant_location')}}" placeholder="موقع المنحة">
                                     </div>
                                     <div class="form-group">
-                                        <label for="other_benefits">{{__('Compensation & Other Benefits')}}</label>
+                                        <label for="other_benefits">المزايا</label>
                                         <input type="hidden" name="other_benefits">
                                         <div class="summernote" ></div>
                                     </div>
+                                    
                                     <div class="form-group">
-                                        <label for="salary">{{__('Salary')}}</label>
-                                        <input type="text" class="form-control"  id="salary" name="salary" value="{{old('salary')}}" placeholder="{{__('Salary')}}">
+                                        <label for="deadline">اخر موعد للتقديم</label>
+                                        <input type="date" class="form-control"  id="deadline" name="deadline" placeholder="ادخل موعد التقديم">
                                     </div>
                                     <div class="form-group">
-                                        <label for="deadline">{{__('Deadline')}}</label>
-                                        <input type="date" class="form-control"  id="deadline" name="deadline" placeholder="{{__('Deadline')}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="application_fee_status"><strong>{{__('Enable Application Fee')}}</strong></label>
+                                        <label for="application_fee_status"><strong>تمكين الرسوم</strong></label>
                                         <label class="switch">
                                             <input type="checkbox" name="application_fee_status">
                                             <span class="slider"></span>
                                         </label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="application_fee">{{__('Application Fee')}}</label>
+                                        <label for="application_fee">رسوم التقديم</label>
                                         <input type="number" class="form-control" name="application_fee" value="{{old('application_fee')}}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="status">{{__('Status')}}</label>
+                                        <label for="status">الحالة</label>
                                         <select name="status" id="status"  class="form-control">
-                                            <option value="publish">{{__('Publish')}}</option>
-                                            <option value="draft">{{__('Draft')}}</option>
+                                            <option value="publish">منشور</option>
+                                            <option value="draft">مسودة</option>
                                         </select>
                                     </div>
                                     <x-media-upload :id="''" :name="'image'" :dimentions="'1920x1280'" :title="__('Image')"/>
-                                    <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">{{__('Add New grant ')}}</button>
+                                    <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">اضافة</button>
                                 </div>
                             </div>
                         </form>
@@ -184,7 +173,7 @@
                         lang : selectedLang
                     },
                     success:function (data) {
-                        $('#category').html('<option value="">Select Category</option>');
+                        $('#category').html('<option value="">حدد تصنيف</option>');
                         $.each(data,function(index,value){
                             $('#category').append('<option value="'+value.id+'">'+value.title+'</option>')
                         });

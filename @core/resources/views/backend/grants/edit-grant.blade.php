@@ -21,7 +21,7 @@
                     <div class="card-body">
                         <div class="header-wrap d-flex justify-content-between">
                             <h4 class="header-title">{{__('Edit grant Post')}}</h4>
-                            <a href="{{route('admin.grants.all')}}" class="btn btn-primary">{{__('All rants')}}</a>
+                            <a href="{{route('admin.grants.all')}}" class="btn btn-primary">{{__('All Grants')}}</a>
                         </div>
 
                         <form action="{{route('admin.grants.update')}}" method="post" enctype="multipart/form-data">

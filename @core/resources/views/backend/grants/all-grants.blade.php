@@ -15,7 +15,7 @@
     </style>
 @endsection
 @section('site-title')
-    {{__('All Posted Grants')}}
+    كل المنح
 @endsection
 @section('content')
     <div class="col-lg-12 col-ml-12 padding-bottom-30">
@@ -36,14 +36,14 @@
             <div class="col-lg-12 mt-5">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">{{__('All Posted grant')}}</h4>
+                        <h4 class="header-title">كل المنح</h4>
                         <div class="bulk-delete-wrapper">
                             <div class="select-box-wrap">
                                 <select name="bulk_option" id="bulk_option">
-                                    <option value="">{{{__('Bulk Action')}}}</option>
-                                    <option value="delete">{{{__('Delete')}}}</option>
+                                    <option value="">اجراء جماعي</option>
+                                    <option value="delete">حذف</option>
                                 </select>
-                                <button class="btn btn-primary btn-sm" id="bulk_delete_btn">{{__('Apply')}}</button>
+                                <button class="btn btn-primary btn-sm" id="bulk_delete_btn">تنفيذ</button>
                             </div>
                         </div>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -67,16 +67,16 @@
                                                     <input type="checkbox" class="all-checkbox">
                                                 </div>
                                             </th>
-                                            <th>{{__('ID')}}</th>
-                                            <th>{{__('Title')}}</th>
+                                            <th>المعرف</th>
+                                            <th>العنوان</th>
                                             <th>الصوره</th>
-                                            <th>{{__('Position')}}</th>
-                                            <th>{{__('Vacancy')}}</th>
-                                            <th>{{__('Category')}}</th>
-                                            <th>{{__('Posted At')}}</th>
-                                            <th>{{__('Deadline')}}</th>
-                                            <th>{{__('Status')}}</th>
-                                            <th>{{__('Action')}}</th>
+                                            <th>نوع المنحة</th>
+                                            <th>الحد الاقصى للمتقدمين</th>
+                                            <th>التصنيف</th>
+                                            <th>تاريخ الانشاء</th>
+                                            <th>اخر موعد للتقديم</th>
+                                            <th>الحالة</th>
+                                            <th>الاحداث</th>
                                             </thead>
                                             <tbody>
                                             @foreach($grants as $data)
@@ -109,9 +109,9 @@
                                                     <td>{{date("d - M - Y", strtotime($data->deadline))}}</td>
                                                     <td>
                                                         @if($data->status === 'draft')
-                                                            <span class="alert alert-warning" >{{__('Draft')}}</span>
+                                                            <span class="alert alert-warning" >نسخة</span>
                                                         @else
-                                                            <span class="alert alert-success">{{__('Publish')}}</span>
+                                                            <span class="alert alert-success">منشور</span>
                                                         @endif
                                                     </td>
                                                     <td>

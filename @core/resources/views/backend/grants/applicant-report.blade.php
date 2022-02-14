@@ -1,6 +1,6 @@
 @extends('backend.admin-master')
 @section('site-title')
-    {{__('Applicant Report')}}
+تقارير المتقدمين
 @endsection
 @section('style')
     <link rel="stylesheet" href="{{asset('assets/backend/css/nice-select.css')}}">
@@ -13,27 +13,27 @@
                 <x-flash-msg/>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="header-title">{{__("Applicant Report")}}</h4>
+                        <h4 class="header-title">التقرير</h4>
                         <form action="{{route('admin.grants.applicant.report')}}" method="get" enctype="multipart/form-data" id="report_generate_form">
                             <input type="hidden" name="page" value="1">
                             <div class="row">
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label for="start_date">{{__('Start Date')}}</label>
+                                        <label for="start_date">من تاريخ</label>
                                         <input type="date" name="start_date" value="{{$start_date}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label for="end_date">{{__('End Date')}}</label>
+                                        <label for="end_date">الى تاريخ</label>
                                         <input type="date" name="end_date" value="{{$end_date}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label for="grant_id">{{__('Select grant')}}</label>
+                                        <label for="grant_id">اختار المنحة</label>
                                         <select name="grant_id" id="grant_id" class="form-control nice-select wide">
-                                            <option value="">{{__('All')}}</option>
+                                            <option value="">الــكـل</option>
                                             @foreach($grants as $grant)
                                             <option @if( $grant->id == $grant_id) selected @endif value="{{$grant->id}}">{{$grant->title}}</option>
                                             @endforeach
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label for="items">{{__('Items')}}</label>
+                                        <label for="items">عدد العناصر</label>
                                         <select name="items" id="items" class="form-control">
                                             <option @if( $items == '10') selected @endif value="10">{{__('10')}}</option>
                                             <option @if( $items == '20') selected @endif value="20">{{__('20')}}</option>
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-2">
-                                    <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">{{__('Submit')}}</button>
+                                    <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4">تنفيذ</button>
                                     @if(!empty($order_data) && count($order_data) > 0)
                                     <button type="button" class="btn btn-secondary mt-4 pr-4 pl-4" id="download_as_csv"><i class="fas fa-download"></i> {{__('CSV')}}</button>
                                     @endif
@@ -71,13 +71,13 @@
                        <div class="table-wrap">
                            <table class="table table-bordered">
                                <thead>
-                                   <th>{{__('grant ID')}}</th>
-                                   <th>{{__('grant Title')}}</th>
+                                   <th>المعرف</th>
+                                   <th>عنوان المنحة</th>
                                    @foreach($all_custom_fields_un as $key => $field)
                                    <th>{{ucfirst(str_replace('-',' ',$key))}}</th>
                                    @endforeach
-                                   <th>{{__('Attachment')}}</th>
-                                   <th>{{__('Date')}}</th>
+                                   <th>المرفق</th>
+                                   <th>التاريخ</th>
                                </thead>
                                <tbody>
                                    @foreach($order_data as $data)
@@ -111,7 +111,7 @@
                             {!! $order_data->links() !!}
                         </div>
                         @else
-                            <div class="alert alert-warning">{{__('No Item Found')}}</div>
+                            <div class="alert alert-warning">لايوجد متقدمين</div>
                         @endif
                     </div>
                 </div>
