@@ -1327,6 +1327,18 @@ function get_blog_category_by_id($id,$type = ''){
 
     return $return_val;
 }
+function get_ads_category_by_id($id,$type = ''){
+    $return_val = __('uncategorized');
+    $ads_cat = \App\AdsCategory::find($id);
+    if (!empty($ads_cat)){
+        $return_val = $ads_cat->name;
+        if ($type == 'link' ){
+            $return_val = '<a href="'.route('frontend.ads.category',['id' => $ads_cat->id,'any' => Str::slug($ads_cat->name) ]).'">'.$ads_cat->name.'</a>';
+        }
+    }
+
+    return $return_val;
+}
 function get_jobs_category_by_id($id,$type = ''){
     $return_val = __('uncategorized');
     $blog_cat = \App\JobsCategory::find($id);
@@ -1346,6 +1358,18 @@ function get_awards_category_by_id($id,$type = ''){
         $return_val = $blog_cat->title;
         if ($type == 'link' ){
             $return_val = '<a href="'.route('frontend.awards.category',['id' => $blog_cat->id,'any' => Str::slug($blog_cat->title) ]).'">'.$blog_cat->title.'</a>';
+        }
+    }
+
+    return $return_val;
+}
+function get_grants_category_by_id($id,$type = ''){
+    $return_val = __('uncategorized');
+    $blog_cat = \App\GrantsCategory::find($id);
+    if (!empty($blog_cat)){
+        $return_val = $blog_cat->title;
+        if ($type == 'link' ){
+            $return_val = '<a href="'.route('frontend.grants.category',['id' => $blog_cat->id,'any' => Str::slug($blog_cat->title) ]).'">'.$blog_cat->title.'</a>';
         }
     }
 
