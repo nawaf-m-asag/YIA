@@ -12,6 +12,7 @@ use App\CourseLession;
 use App\CourseLessionLang;
 use App\CourseReview;
 use App\CoursesCategory;
+use App\CourseCertificate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -198,8 +199,8 @@ class CourseController extends Controller
             'ratings' => 'required|numeric',
             'message' => 'required|string'
         ],[
-            'ratings.required' => __('rating required'),
-            'message.required' => __('message required'),
+            'ratings.required' => __('التقييم مطلوب'),
+            'message.required' => __('الرسالة مطلوبة'),
         ]);
 
         $user_id = auth()->guard('web')->user()->id;
@@ -207,7 +208,7 @@ class CourseController extends Controller
         $is_purchased = CourseEnroll::where(['course_id' => $request->course_id,'user_id' => $user_id])->first();
         $old_review = CourseReview::where(['course_id' => $request->course_id,'user_id' => $user_id])->first();
         $data['type'] = 'danger';
-        $data['msg'] = __('you have not used this service, you cannot leave feedback');
+        $data['msg'] = __('لم تستخدم هذه الخدمة ، لا يمكنك ترك تعليقات');
 
         if (!empty($is_purchased) && empty($old_review)){
             CourseReview::create([
@@ -217,10 +218,10 @@ class CourseController extends Controller
                 'ratings' => $request->ratings
             ]);
             $data['type'] = 'success';
-            $data['msg'] = __('thanks for your feedback');
+            $data['msg'] = __('شكرا لك على مراجعتك');
         }
         if (!empty($old_review)){
-            $data['msg'] = __('you have already given your feedback');
+            $data['msg'] = __('لقد قمت بالمراجعه ');
         }
         return response()->json($data);
     }
@@ -231,5 +232,10 @@ class CourseController extends Controller
     }
     public function payment_cancel($id){
 
+    }
+     public function course_certificate_download($id){
+
+        $course_certificate = CourseCertificate::with(['course'])->find($id);
+        return view('certificate.course')->with(['course_certificate' => $course_certificate]);
     }
 }
