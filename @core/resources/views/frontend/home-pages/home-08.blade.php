@@ -28,6 +28,7 @@ a:hover{
         text-align: right;
     }
     .carousel-inner img{
+        width: 100% !important;
         height: -webkit-fill-available;
     }
     .item{
@@ -58,18 +59,35 @@ a:hover{
     margin-left:unset;
     margin-right: unset;
 }
+.carousel-indicators li{
+    margin-right: 10px !important;
+        
+}
+.carousel-indicators .active{
+   background: var(--main-color-one);
+
+}
+.svg{width: 100%;
+height: 40px;
+margin-top: -35px}
+.svg_slider{
+width: 100%;
+height: 60px;
+margin-top: -50px
+
+}
 </style>
 @endsection
 @php
     $home_page_variant = $home_page ?? filter_static_option_value('home_page_variant',$static_field_data);
 @endphp
 
-<div class="header-style-03  header-variant-{{$home_page_variant}}">
+<div  class="header-style-03  header-variant-{{$home_page_variant}}">
     <nav class="navbar navbar-area navbar-expand-lg">
-        <div class="container nav-container">
+        <div class="container nav-container w-100">
             <div class="responsive-mobile-menu">
                 <div class="logo-wrapper">
-                    <a href="{{url('/')}}" class="logo">
+                    <a href="#acc234923" class="logo">
                         @if(!empty(filter_static_option_value('site_logo',$global_static_field_data)))
                             {!! render_image_markup_by_attachment_id(filter_static_option_value('site_logo',$global_static_field_data)) !!}
                         @else
@@ -105,11 +123,11 @@ a:hover{
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
-    <ol class="carousel-indicators">
+    <ul class="carousel-indicators">
       @foreach($all_header_slider  as $i => $data)  
       <li data-target="#myCarousel" data-slide-to="{!!$i!!}" @if($i==0)class="active"@endif></li>
       @endforeach 
-    </ol>
+    </ul>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner">
@@ -147,6 +165,7 @@ a:hover{
               
     </div> 
       @endforeach
+      
     </div>
 
     <!-- Left and right controls -->
@@ -158,6 +177,7 @@ a:hover{
       <span class="glyphicon glyphicon-chevron-right"></span>
       <span class="sr-only">Next</span>
     </a>
+ 
   </div>
 
  
@@ -180,9 +200,13 @@ a:hover{
                         <div class="political-single-what-we-cover-item  margin-bottom-30">
                             <div class="thumb">
                                 {!! render_image_markup_by_attachment_id($data->image,'grid') !!}
-                                <div class="icon style-{{$a}}">
-                                    <i class="{{$data->icon}}"></i>  
-                                </div>
+                                <figure class="ie-curved-y position-absolute right-0 bottom-0 left-0 mb-n1">
+                                    <svg class="svg" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1920 100.1">
+                                    <path fill="#fff" d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"></path>
+                                    </svg>
+                                    </figure>
+
+                          
                             </div>
                             <div class="content">
                                 <h4 class="title">
