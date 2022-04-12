@@ -82,12 +82,12 @@ margin-top: -50px
     $home_page_variant = $home_page ?? filter_static_option_value('home_page_variant',$static_field_data);
 @endphp
 
-<div  class="header-style-03  header-variant-{{$home_page_variant}}">
+<div class="header-style-03  header-variant-{{$home_page_variant}}">
     <nav class="navbar navbar-area navbar-expand-lg">
-        <div class="container nav-container w-100">
+        <div class="container nav-container">
             <div class="responsive-mobile-menu">
                 <div class="logo-wrapper">
-                    <a href="#acc234923" class="logo">
+                    <a href="{{url('/')}}" class="logo">
                         @if(!empty(filter_static_option_value('site_logo',$global_static_field_data)))
                             {!! render_image_markup_by_attachment_id(filter_static_option_value('site_logo',$global_static_field_data)) !!}
                         @else
@@ -121,66 +121,74 @@ margin-top: -50px
 
 
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ul class="carousel-indicators">
-      @foreach($all_header_slider  as $i => $data)  
-      <li data-target="#myCarousel" data-slide-to="{!!$i!!}" @if($i==0)class="active"@endif></li>
-      @endforeach 
-    </ul>
+<div class="header-slider-one global-carousel-init logistic-dots"
+     data-loop="true"
+     data-desktopitem="1"
+     data-mobileitem="1"
+     data-tabletitem="1"
+     data-nav="true"
+     data-autoplay="true"
+>
+@php
+    $all_bg_image_fields =  filter_static_option_value('home_page_07_header_section_bg_image',$static_field_data);
+    $all_bg_image_fields = !empty($all_bg_image_fields) ? unserialize($all_bg_image_fields) : [];
+    $all_bg_image_sm_fields =  get_static_option('home_page_07_header_section_bg_image_sm');
+    $all_bg_image_sm_fields = !empty($all_bg_image_sm_fields) ? unserialize($all_bg_image_sm_fields) : [''];
 
-    <!-- Wrapper for slides -->
-    <div class="carousel-inner">
-       
-        @foreach($all_header_slider as $key => $data)
+    $all_button_one_url_fields =  filter_static_option_value('home_page_07_header_section_button_one_url',$static_field_data);
+    $all_button_one_url_fields = !empty($all_button_one_url_fields) ? unserialize($all_button_one_url_fields) : [];
 
-        @php
-        $img = get_attachment_image_by_id($data->image,null,true);
-        $img_sm = get_attachment_image_by_id($data->image_sm,null,true);
-        @endphp   
-      <div class="item @if($key==0) active @endif">
-        <picture>
-            <source srcset="{{$img['img_url']}}"
+    $all_button_one_icon_fields =  filter_static_option_value('home_page_07_header_section_button_one_icon',$static_field_data);
+    $all_button_one_icon_fields = !empty($all_button_one_icon_fields) ? unserialize($all_button_one_icon_fields) : [];
+
+    $all_description_fields = filter_static_option_value('home_page_07_'.$user_select_lang_slug.'_header_section_description',$static_field_data);
+    $all_description_fields = !empty($all_description_fields) ? unserialize($all_description_fields) : [];
+    $all_btn_one_text_fields = filter_static_option_value('home_page_07_'.$user_select_lang_slug.'_header_section_button_one_text',$static_field_data);
+    $all_btn_one_text_fields = !empty($all_btn_one_text_fields) ? unserialize($all_btn_one_text_fields) : [];
+    $all_title_fields = filter_static_option_value('home_page_07_'.$user_select_lang_slug.'_header_section_title',$static_field_data);
+    $all_title_fields = !empty($all_title_fields) ? unserialize($all_title_fields) : [];
+@endphp
+@foreach($all_bg_image_fields as $index => $image_field)
+    @php
+        $image_details = get_attachment_image_by_id($image_field,'full');
+        $image_sm_details = get_attachment_image_by_id($all_bg_image_sm_fields[$index], 'full');
+    @endphp
+    <div class="header-area style-04 header-bg-04 industry-home">
+        <picture class="img_slider">
+            @if (isset($image_details['img_url']))
+            <source srcset="{{$image_details['img_url']}}"
                     media="(min-width: 650px)">
-            <img src="{{$img_sm['img_url']}}" alt="" />
-            <div id="overlay"></div>
+            @endif         
+            @if (isset($image_sm_details['img_url']))
+            <img src="{{$image_sm_details['img_url']}}" alt="" />   
+            @endif  
+            
+            {{-- <div class="overlay"></div> --}}
         </picture>
-        <div class="slider_text">
-            @if(!empty($data->subtitle))
-            <h1 class="subtitle">{{$data->subtitle}}</h1>
-        @endif
-        @if(!empty($data->title))
-            <h1 class="title">{{$data->title}}</h1>
-        @endif
-        @if(!empty($data->description))
-            <p class="description">{{$data->description}}</p>
-        @endif
-        @if(!empty($data->btn_01_status))
-            <div class="btn-wrapper  desktop-left padding-top-30">
-                <a href="{{$data->btn_01_url}}" class="boxed-btn">{{$data->btn_01_text}}</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="header-inner industry-home">
+                        @if(isset($all_title_fields[$index]))
+                            <h1 class="title">{{$all_title_fields[$index]}}</h1>
+                        @endif
+                        @if(isset($all_description_fields[$index]))
+                            <p class="description">{{$all_description_fields[$index]}}</p>
+                        @endif
+                        @if(isset($all_btn_one_text_fields[$index]) || isset($all_btn_two_text_fields[$index]))
+                            <div class="btn-wrapper">
+                                @if(isset($all_btn_one_text_fields[$index]))
+                                <a href="{{$all_button_one_url_fields[$index] ?? ''}}" class="industry-btn">{{$all_btn_one_text_fields[$index]}} <i class="{{$all_button_one_icon_fields[$index] ?? ''}}"></i></a>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                </div>
             </div>
-        @endif
         </div>
-
-              
-    </div> 
-      @endforeach
-      
     </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-      <span class="glyphicon glyphicon-chevron-left"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">
-      <span class="glyphicon glyphicon-chevron-right"></span>
-      <span class="sr-only">Next</span>
-    </a>
- 
-  </div>
-
- 
+@endforeach
+</div>
 
 @if(!empty(filter_static_option_value('home_page_service_section_status',$static_field_data)))
     <div class="political-what-we-offer-area padding-bottom-30">

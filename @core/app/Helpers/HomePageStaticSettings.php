@@ -51,6 +51,16 @@ class HomePageStaticSettings
             'home_page_01_contact_area_map_location',
             'get_in_touch_form_fields',
             'home_page_contact_section_status',
+            'home_page_01_'.$lang.'_contact_area_title',
+            'home_page_01_'.$lang.'_contact_area_button_text',
+            'home_page_07_'.$lang.'_topbar_section_info_item_title',
+            'home_page_07_'.$lang.'_topbar_section_info_item_details',
+            'home_page_07_'.$lang.'_header_section_description',
+            'home_page_07_'.$lang.'_header_section_button_one_text',
+            'home_page_07_'.$lang.'_header_section_title',
+            'home_page_07_header_section_bg_image',
+            'home_page_07_header_section_button_one_url',
+            'home_page_07_header_section_button_one_icon',
         ];
     }
 

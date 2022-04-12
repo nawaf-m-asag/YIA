@@ -22,11 +22,13 @@
                         <form action="{{route('admin.home07.header')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             @php
-                                   $all_bg_image_fields =  get_static_option('home_page_07_header_section_bg_image');
+                                   $all_bg_image_fields =  get_static_option('home_page_08_header_section_bg_image');
                                    $all_bg_image_fields = !empty($all_bg_image_fields) ? unserialize($all_bg_image_fields) : [''];
-                                   $all_button_one_icon_fields =  get_static_option('home_page_07_header_section_button_one_icon');
+                                   $all_bg_image_sm_fields =  get_static_option('home_page_08_header_section_bg_image_sm');
+                                   $all_bg_image_sm_fields = !empty($all_bg_image_sm_fields) ? unserialize($all_bg_image_sm_fields) : [''];
+                                   $all_button_one_icon_fields =  get_static_option('home_page_08_header_section_button_one_icon');
                                    $all_button_one_icon_fields = !empty($all_button_one_icon_fields) ? unserialize($all_button_one_icon_fields) : [];
-                                   $all_button_one_url_fields =  get_static_option('home_page_07_header_section_button_one_url');
+                                   $all_button_one_url_fields =  get_static_option('home_page_08_header_section_button_one_url');
                                    $all_button_one_url_fields = !empty($all_button_one_url_fields) ? unserialize($all_button_one_url_fields) : [];
                             @endphp
                             @foreach($all_bg_image_fields as $index => $image_field)
@@ -42,35 +44,35 @@
                                         <div class="tab-content margin-top-30" id="myTabContent">
                                             @foreach($all_languages as $key => $lang)
                                                 @php
-                                                    $all_description_fields = get_static_option('home_page_07_'.$lang->slug.'_header_section_description');
+                                                    $all_description_fields = get_static_option('home_page_08_'.$lang->slug.'_header_section_description');
                                                     $all_description_fields = !empty($all_description_fields) ? unserialize($all_description_fields) : [''];
-                                                    $all_btn_one_text_fields = get_static_option('home_page_07_'.$lang->slug.'_header_section_button_one_text');
+                                                    $all_btn_one_text_fields = get_static_option('home_page_08_'.$lang->slug.'_header_section_button_one_text');
                                                     $all_btn_one_text_fields = !empty($all_btn_one_text_fields) ? unserialize($all_btn_one_text_fields) : ['Request Quote'];
-                                                    $all_title_fields = get_static_option('home_page_07_'.$lang->slug.'_header_section_title');
+                                                    $all_title_fields = get_static_option('home_page_08_'.$lang->slug.'_header_section_title');
                                                     $all_title_fields = !empty($all_title_fields) ? unserialize($all_title_fields) : ['world best industry service here'];
                                                 @endphp
 
                                                 <div class="tab-pane fade @if($key == 0) show active @endif" id="tab_{{$lang->slug}}_{{$key + $index}}" role="tabpanel" >
                                                     <div class="form-group">
-                                                        <label for="home_page_07_{{$lang->slug}}_header_section_title">{{__('Title')}}</label>
-                                                        <input type="text" name="home_page_07_{{$lang->slug}}_header_section_title[]" class="form-control" value="{{$all_title_fields[$index] ?? ''}}">
+                                                        <label for="home_page_08_{{$lang->slug}}_header_section_title">{{__('Title')}}</label>
+                                                        <input type="text" name="home_page_08_{{$lang->slug}}_header_section_title[]" class="form-control" value="{{$all_title_fields[$index] ?? ''}}">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="home_page_07_{{$lang->slug}}_header_section_description">{{__('Description')}}</label>
-                                                        <textarea  name="home_page_07_{{$lang->slug}}_header_section_description[]" class="form-control" > {{$all_description_fields[$index] ?? ''}}</textarea>
+                                                        <label for="home_page_08_{{$lang->slug}}_header_section_description">{{__('Description')}}</label>
+                                                        <textarea  name="home_page_08_{{$lang->slug}}_header_section_description[]" class="form-control" > {{$all_description_fields[$index] ?? ''}}</textarea>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="home_page_07_{{$lang->slug}}_header_section_button_one_text">{{__('Button One Title')}}</label>
-                                                        <input type="text" name="home_page_07_{{$lang->slug}}_header_section_button_one_text[]" class="form-control" value="{{$all_btn_one_text_fields[$index] ?? ''}}">
+                                                        <label for="home_page_08_{{$lang->slug}}_header_section_button_one_text">{{__('Button One Title')}}</label>
+                                                        <input type="text" name="home_page_08_{{$lang->slug}}_header_section_button_one_text[]" class="form-control" value="{{$all_btn_one_text_fields[$index] ?? ''}}">
                                                     </div>
                                                 </div>
                                             @endforeach
                                             <div class="form-group">
-                                                <label for="home_page_07_header_section_button_one_url" class="d-block">{{__('Button One Url')}}</label>
-                                                <input type="text" class="form-control" value="{{$all_button_one_url_fields[$index] ??''}}" name="home_page_07_header_section_button_one_url[]">
+                                                <label for="home_page_08_header_section_button_one_url" class="d-block">{{__('Button One Url')}}</label>
+                                                <input type="text" class="form-control" value="{{$all_button_one_url_fields[$index] ??''}}" name="home_page_08_header_section_button_one_url[]">
                                             </div>
                                             <div class="form-group">
-                                                <label for="home_page_07_header_section_button_one_icon" class="d-block">{{__('Icon')}}</label>
+                                                <label for="home_page_08_header_section_button_one_icon" class="d-block">{{__('Icon')}}</label>
                                                 <div class="btn-group ">
                                                     <button type="button" class="btn btn-primary iconpicker-component">
                                                         <i class="{{$all_button_one_icon_fields[$index] ?? ''}}"></i>
@@ -82,10 +84,10 @@
                                                     </button>
                                                     <div class="dropdown-menu"></div>
                                                 </div>
-                                                <input type="hidden" class="form-control" value="{{$all_button_one_icon_fields[$index] ?? ''}}" name="home_page_07_header_section_button_one_icon[]">
+                                                <input type="hidden" class="form-control" value="{{$all_button_one_icon_fields[$index] ?? ''}}" name="home_page_08_header_section_button_one_icon[]">
                                             </div>
                                             <div class="form-group">
-                                                <label for="home_page_07_header_section_bg_image">{{__('Background Image')}}</label>
+                                                <label for="home_page_08_header_section_bg_image">{{__('Background Image')}}</label>
                                                 @php $signature_image_upload_btn_label = 'Upload Image'; @endphp
                                                 <div class="media-upload-btn-wrapper">
                                                     <div class="img-wrap">
@@ -103,7 +105,36 @@
                                                             @php $signature_image_upload_btn_label = 'Change Image'; @endphp
                                                         @endif
                                                     </div>
-                                                    <input type="hidden" name="home_page_07_header_section_bg_image[]" value="{{$image_field}}">
+                                                    <input type="hidden" name="home_page_08_header_section_bg_image[]" value="{{$image_field}}">
+                                                    <button type="button" class="btn btn-info media_upload_form_btn" data-btntitle="{{__('Select Image')}}" data-modaltitle="{{__('Upload Image')}}" data-imgid="{{$image_field}}" data-toggle="modal" data-target="#media_upload_modal">
+                                                        {{__($signature_image_upload_btn_label)}}
+                                                    </button>
+                                                </div>
+                                                <small>{{__('recommended image size is 1920x1050 pixel')}}</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="home_page_08_header_section_bg_image">{{__('Background Image')}}</label>
+                                                @php $signature_image_upload_btn_label = 'Upload Image'; @endphp
+                                                <div class="media-upload-btn-wrapper">
+                                                    <div class="img-wrap">
+
+                                                        @php
+                                                        if (isset($all_bg_image_sm_fields[$index])) {
+                                                            $signature_img_sm = get_attachment_image_by_id($all_bg_image_sm_fields[$index],null,false);
+                                                        }
+                                                        @endphp
+                                                        @if (isset($signature_img_sm)&&!empty($signature_img_sm))
+                                                            <div class="attachment-preview">
+                                                                <div class="thumbnail">
+                                                                    <div class="centered">
+                                                                        <img class="avatar user-thumb" src="{{$signature_img_sm['img_url']}}" >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @php $signature_image_upload_btn_label = 'Change Image'; @endphp
+                                                        @endif
+                                                    </div>
+                                                    <input type="hidden" name="home_page_08_header_section_bg_image_sm[]" value="@php echo $all_bg_image_sm_fields[$index] @endphp">
                                                     <button type="button" class="btn btn-info media_upload_form_btn" data-btntitle="{{__('Select Image')}}" data-modaltitle="{{__('Upload Image')}}" data-imgid="{{$image_field}}" data-toggle="modal" data-target="#media_upload_modal">
                                                         {{__($signature_image_upload_btn_label)}}
                                                     </button>
