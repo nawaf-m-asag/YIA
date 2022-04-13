@@ -74,6 +74,7 @@ Route::group(['middleware' => ['setlang:frontend', 'globalVariable', 'maintains_
         Route::post($course_page_slug.'-paystack/pay', 'CourseEnrollController@paystack_pay')->name('frontend.course.paystack.pay');
         Route::get($course_page_slug.'-mollie/webhook', 'CourseEnrollController@mollie_webhook')->name('frontend.course.mollie.webhook');
         Route::get($course_page_slug.'-flutterwave/callback', 'CourseEnrollController@flutterwave_callback')->name('frontend.course.flutterwave.callback');
+        Route::get('/course-certificate/check/{id}', 'CourseController@course_certificate_download')->name('user.dashboard.course.certificate.check');
     });
 
 });
@@ -2146,6 +2147,17 @@ Route::prefix('admin-home')->middleware(['setlang:backend'])->group(function () 
         Route::post('/update', 'DiscountController@update')->name('admin.discounts.update');
         Route::post('/delete/{id}', 'DiscountController@delete')->name('admin.discounts.delete');
         Route::post('/bulk-action', 'DiscountController@bulk_action')->name('admin.discounts.bulk.action');
+    });
+         /*==============================================
+       universities-list
+    ==============================================*/
+    Route::prefix('universities-list')->middleware(['adminPermissionCheck:Brand Logos'])->group(function () {
+        //brand logos
+        Route::get('/', 'UniversitiesListController@index')->name('admin.universities-list');
+        Route::post('/', 'UniversitiesListController@store');
+        Route::post('/update', 'UniversitiesListController@update')->name('admin.universities-list.update');
+        Route::post('/delete/{id}', 'UniversitiesListController@delete')->name('admin.universities-list.delete');
+        Route::post('/bulk-action', 'UniversitiesListController@bulk_action')->name('admin.universities-list.bulk.action');
     });
      /*==============================================
        Supporters LOGOS
